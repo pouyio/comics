@@ -127,7 +127,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row align-items-center\">\n    <nav class=\"col-6\">\n      <ul class=\"p-0\">\n        <li class=\"d-inline-block\">\n          <button type=\"button\" class=\"btn btn-sm btn-secondary\" (click)=\"location.back()\" [hidden]=\"noBack\">\n            <i class=\"fa fa-angle-left\"></i>\n            Back\n          </button>\n        </li>\n        <li class=\"d-inline-block\"><a routerLink=\"/login\">Login</a></li>\n        <li class=\"d-inline-block\"><a (click)=\"logout()\">Logout</a></li>\n        <li class=\"d-inline-block\"><a routerLink=\"/comics\">Comics</a></li>\n      </ul>\n    </nav>\n    <div class=\"col-6\">\n      <app-search></app-search>\n    </div>\n  </div>\n  <div *ngIf=\"resolving | async\" class=\"card fixed-top bg-faded\">\n    <h1 class=\"display-4 card-block text-center\">\n      Loading something...\n    </h1>\n  </div>\n  <router-outlet></router-outlet>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row align-items-center\" *ngIf=\"logged\">\n    <nav class=\"col-sm-6\">\n      <ul class=\"p-0\">\n        <li class=\"d-inline-block\">\n          <button type=\"button\" class=\"btn btn-sm btn-secondary\" (click)=\"goBack()\">\n            <i class=\"fa fa-angle-left\"></i>\n            Back\n          </button>\n        </li>\n        <li class=\"d-inline-block btn-link\"><a (click)=\"logout()\">Logout</a></li>\n        <li class=\"d-inline-block\"><a routerLink=\"/comics\">Comics</a></li>\n      </ul>\n    </nav>\n    <div class=\"col-sm-6\">\n      <app-search></app-search>\n    </div>\n  </div>\n  <div *ngIf=\"resolving | async\" class=\"card fixed-top bg-faded\">\n    <h1 class=\"display-4 card-block text-center\">\n      Loading something...\n    </h1>\n  </div>\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
 
@@ -165,13 +165,14 @@ var AppComponent = (function () {
         this.auth = auth;
         this.resolver = resolver;
         this.cdRef = cdRef;
-        this.noBack = false;
-        this.logged = true;
+        this.goBack = function () { return window.history.back(); };
         this.logout = function () {
             _this.logged = false;
             _this.api.logout();
         };
-        router.events.subscribe(function (params) { return _this.noBack = (router.url === '/login'); });
+        router.events.subscribe(function (params) {
+            _this.logged = params.url !== '/login';
+        });
         this.logged = !!this.auth.getToken();
     }
     AppComponent.prototype.ngOnInit = function () {
@@ -387,8 +388,7 @@ var AuthGuard = (function () {
         this.auth = auth;
         this.router = router;
         this.canActivate = function () {
-            var can = !!_this.auth.getToken();
-            if (can)
+            if (!!_this.auth.getToken())
                 return true;
             _this.router.navigate(['/login']);
         };
@@ -430,18 +430,18 @@ var AuthService = (function () {
         this.getToken = function () {
             if (_this.token)
                 return _this.token;
-            return localStorage.getItem('currentUser');
+            return localStorage.getItem('token');
         };
         this.setToken = function (tk) {
-            localStorage.setItem('currentUser', tk);
+            localStorage.setItem('token', tk);
             _this.token = tk;
         };
         this.removeToken = function () {
-            localStorage.removeItem('currentUser');
+            localStorage.removeItem('token');
             _this.token = '';
             _this.router.navigate(['login']);
         };
-        this.token = localStorage.getItem('currentUser');
+        this.token = localStorage.getItem('token');
     }
     return AuthService;
 }());
@@ -703,7 +703,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic/comic.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div class=\"row\">\n    <h1 class=\"col-12 display-4\">{{comic.data.attributes.title}}</h1>\n    <p class=\"col-12\"><mark>{{comic.data.attributes.status}}.</mark> {{comic.data.attributes.summary}}</p>\n\n    <div class=\"col-4\">\n      <img class=\"img-fluid\" [src]=\"comic.data.links.cover\" alt=\"cover\">\n    </div>\n\n    <div class=\"col-4\">\n      <h2>Info</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\">\n            <strong>Artist</strong>: {{comic.data.relationships.artist.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Publisher</strong>: {{comic.data.relationships.publisher.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Writer</strong>: {{comic.data.relationships.writer.id}}\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-4\">\n      <div class=\"row\">\n        <div class=\"col-12\">\n          <h2>Genres</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              <span class=\"badge badge-default m-1\" *ngFor=\"let genre of genres\">{{genre.id}}</span>\n            </li>\n          </ul>\n        </div>\n        <div class=\"col-12\">\n          <h2>Publication</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              {{comic.data.attributes.publication_date}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-12 col-sm-10 offset-sm-1\">\n      <h2>Issues</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of issues; let i = index\">\n          <a routerLink=\"/comic/{{comic.data.id}}/{{getIssueLink(issue.links.self)}}\">{{issue.attributes.title}}</a>\n          <div class=\"\">\n            <button (click)=\"downloadIssue(comic.data.id, getIssueLink(issue.links.self))\" type=\"button\" class=\"btn btn-sm btn-outline-warning\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n            PDF\n          </button>\n            <button [class.active]=\"issuesRead[issue.id]\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead(issue.id)\">\n            Read\n          </button>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n\n</div>\n\n<ng-template #noAvailable>\n  <div class=\"alert alert-danger\" role=\"alert\">\n    Comic not found.\n  </div>\n</ng-template>\n"
+module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div class=\"row\">\n    <h1 class=\"col-12 display-4\">{{comic.data.attributes.title}}</h1>\n    <p class=\"col-12\"><mark>{{comic.data.attributes.status}}.</mark> {{comic.data.attributes.summary}}</p>\n\n    <div class=\"col-sm-4 col-6\">\n      <img class=\"img-fluid\" [src]=\"comic.data.links.cover\" alt=\"cover\">\n    </div>\n\n    <div class=\"col-sm-4 col-6\">\n      <h2>Info</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\">\n            <strong>Artist</strong>: {{comic.data.relationships.artist.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Publisher</strong>: {{comic.data.relationships.publisher.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Writer</strong>: {{comic.data.relationships.writer.id}}\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-4\">\n      <div class=\"row\">\n        <div class=\"col-6 col-sm-12\">\n          <h2>Genres</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              <span class=\"badge badge-default m-1\" *ngFor=\"let genre of genres\">{{genre.id}}</span>\n            </li>\n          </ul>\n        </div>\n        <div class=\"col-6 col-sm-12\">\n          <h2>Publication</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              {{comic.data.attributes.publication_date}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-12 col-sm-10 offset-sm-1\">\n      <h2>Issues</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of issues; let i = index\">\n          <a routerLink=\"/comic/{{comic.data.id}}/{{getIssueLink(issue.links.self)}}\">{{issue.attributes.title}}</a>\n          <div class=\"\">\n            <button (click)=\"downloadIssue(comic.data.id, getIssueLink(issue.links.self))\" type=\"button\" class=\"btn btn-sm btn-outline-warning\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n            PDF\n          </button>\n            <button [class.active]=\"issuesRead[issue.id]\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead(issue.id)\">\n            Read\n          </button>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n\n</div>\n\n<ng-template #noAvailable>\n  <div class=\"alert alert-danger\" role=\"alert\">\n    Comic not found.\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -851,7 +851,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n      {{comicsMap[comic.comic].attributes.publication_date}}\n      <a routerLink=\"/comic/{{comic.comic}}\"> {{comicsMap[comic.comic].attributes.title}}</a>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <a routerLink=\"/comic/{{new.id}}\">{{new.attributes.title}}\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"></a>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <a routerLink=\"/comic/{{update.id}}\">{{update.attributes.title}}\n        <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"></a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n      {{comicsMap[comic.comic].attributes.publication_date}}\n      <a routerLink=\"/comic/{{comic.comic}}\"> {{comicsMap[comic.comic].attributes.title}}</a>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <a routerLink=\"/comic/{{new.id}}\">{{new.attributes.title}}\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"></a>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <a routerLink=\"/comic/{{update.id}}\">{{update.attributes.title}}\n        <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"></a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1011,7 +1011,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row justify-content-center my-5\">\n  <div class=\"col-6\">\n    <div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" (keyup.enter)=\"login(user)\" placeholder=\"User\" [(ngModel)]=\"user\">\n      <span class=\"input-group-btn\">\n        <button class=\"btn btn-primary\" type=\"button\" (click)=\"login(user)\">Login</button>\n      </span>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row justify-content-center my-5\">\n  <div class=\"col-sm-6\">\n    <div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" (keyup.enter)=\"login(user)\" placeholder=\"User\" [(ngModel)]=\"user\">\n      <span class=\"input-group-btn\">\n        <button class=\"btn btn-primary\" type=\"button\" (click)=\"login(user)\">Login</button>\n      </span>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
