@@ -485,12 +485,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var BaseService = (function () {
-    // protected baseUrl: string = 'http://ec2-52-57-145-92.eu-central-1.compute.amazonaws.com:8080';
     function BaseService(http, auth, resolver) {
         this.http = http;
         this.auth = auth;
         this.resolver = resolver;
-        this.baseUrl = 'http://192.168.1.33:8080';
+        // protected baseUrl: string = 'http://192.168.1.33:8080';
+        this.baseUrl = 'http://ec2-52-57-145-92.eu-central-1.compute.amazonaws.com:8080';
     }
     BaseService.prototype.getOptions = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]();
