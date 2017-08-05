@@ -99,7 +99,7 @@ var ApiService = (function (_super) {
     return ApiService;
 }(__WEBPACK_IMPORTED_MODULE_2__base_service__["a" /* BaseService */]));
 ApiService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
 ], ApiService);
 
 //# sourceMappingURL=api.service.js.map
@@ -182,12 +182,12 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_common__["g" /* Location */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_common__["g" /* Location */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__resolve_service__["a" /* ResolveService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["Z" /* ChangeDetectorRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["Z" /* ChangeDetectorRef */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_common__["g" /* Location */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_common__["g" /* Location */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__resolve_service__["a" /* ResolveService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"]) === "function" && _f || Object])
 ], AppComponent);
 
 var _a, _b, _c, _d, _e, _f;
@@ -205,22 +205,23 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__comic_issue_resolve__ = __webpack_require__("../../../../../src/app/comic-issue-resolve.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__comics_read_resolve__ = __webpack_require__("../../../../../src/app/comics-read-resolve.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__comic_resolve__ = __webpack_require__("../../../../../src/app/comic-resolve.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__comic_comic_component__ = __webpack_require__("../../../../../src/app/comic/comic.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__comic_issue_comic_issue_component__ = __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__search_search_component__ = __webpack_require__("../../../../../src/app/search/search.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__image_viewer_image_viewer_component__ = __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__news_news_component__ = __webpack_require__("../../../../../src/app/news/news.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__ = __webpack_require__("../../../../ngx-order-pipe/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__ = __webpack_require__("../../../../../src/app/comic-issue-resolve.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__comics_read_resolve__ = __webpack_require__("../../../../../src/app/comics-read-resolve.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__comic_resolve__ = __webpack_require__("../../../../../src/app/comic-resolve.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__comic_comic_component__ = __webpack_require__("../../../../../src/app/comic/comic.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__comic_issue_comic_issue_component__ = __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__search_search_component__ = __webpack_require__("../../../../../src/app/search/search.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__image_viewer_image_viewer_component__ = __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
 /* unused harmony export MyHammerConfig */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __extends = (this && this.__extends) || (function () {
@@ -283,36 +284,36 @@ var AppModule = (function () {
     return AppModule;
 }());
 AppModule = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__comic_comic_component__["a" /* ComicComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__comic_issue_comic_issue_component__["a" /* ComicIssueComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__search_search_component__["a" /* SearchComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__home_home_component__["a" /* HomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_18__image_viewer_image_viewer_component__["a" /* ImageViewerComponent */],
-            __WEBPACK_IMPORTED_MODULE_19__login_login_component__["a" /* LoginComponent */],
-            __WEBPACK_IMPORTED_MODULE_21__news_news_component__["a" /* NewsComponent */]
+            __WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__comic_comic_component__["a" /* ComicComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__comic_issue_comic_issue_component__["a" /* ComicIssueComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__search_search_component__["a" /* SearchComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__home_home_component__["a" /* HomeComponent */],
+            __WEBPACK_IMPORTED_MODULE_19__image_viewer_image_viewer_component__["a" /* ImageViewerComponent */],
+            __WEBPACK_IMPORTED_MODULE_20__login_login_component__["a" /* LoginComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["b" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* ReactiveFormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__["OrderModule"],
             __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_20__app_routes__["a" /* AppRoutes */])
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_21__app_routes__["a" /* AppRoutes */])
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_8__auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_6__auth_guard__["a" /* AuthGuard */],
-            __WEBPACK_IMPORTED_MODULE_7__api_service__["a" /* ApiService */],
-            __WEBPACK_IMPORTED_MODULE_9__resolve_service__["a" /* ResolveService */],
-            __WEBPACK_IMPORTED_MODULE_12__comic_resolve__["a" /* ComicResolve */],
-            __WEBPACK_IMPORTED_MODULE_11__comics_read_resolve__["a" /* ComicsReadResolve */],
-            __WEBPACK_IMPORTED_MODULE_10__comic_issue_resolve__["a" /* ComicIssueResolve */],
+            __WEBPACK_IMPORTED_MODULE_9__auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_7__auth_guard__["a" /* AuthGuard */],
+            __WEBPACK_IMPORTED_MODULE_8__api_service__["a" /* ApiService */],
+            __WEBPACK_IMPORTED_MODULE_10__resolve_service__["a" /* ResolveService */],
+            __WEBPACK_IMPORTED_MODULE_13__comic_resolve__["a" /* ComicResolve */],
+            __WEBPACK_IMPORTED_MODULE_12__comics_read_resolve__["a" /* ComicsReadResolve */],
+            __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__["a" /* ComicIssueResolve */],
             { provide: __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["c" /* HAMMER_GESTURE_CONFIG */], useClass: MyHammerConfig }
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -396,7 +397,7 @@ var AuthGuard = (function () {
     return AuthGuard;
 }());
 AuthGuard = __decorate([
-    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["e" /* Inject */])(__WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */])), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["e" /* Inject */])(__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */])),
+    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */])), __param(1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */])),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], AuthGuard);
 
@@ -446,7 +447,7 @@ var AuthService = (function () {
     return AuthService;
 }());
 AuthService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object])
 ], AuthService);
 
@@ -516,7 +517,7 @@ var BaseService = (function () {
     return BaseService;
 }());
 BaseService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__resolve_service__["a" /* ResolveService */]) === "function" && _c || Object])
 ], BaseService);
 
@@ -558,7 +559,7 @@ var ComicIssueResolve = (function () {
     return ComicIssueResolve;
 }());
 ComicIssueResolve = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__resolve_service__["a" /* ResolveService */]) === "function" && _b || Object])
 ], ComicIssueResolve);
 
@@ -630,7 +631,7 @@ var ComicIssueComponent = (function () {
     return ComicIssueComponent;
 }());
 ComicIssueComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-comic-issue',
         template: __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.html"),
         styles: [__webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.css")]
@@ -673,7 +674,7 @@ var ComicResolve = (function () {
     return ComicResolve;
 }());
 ComicResolve = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__resolve_service__["a" /* ResolveService */]) === "function" && _b || Object])
 ], ComicResolve);
 
@@ -772,7 +773,7 @@ var ComicComponent = (function () {
     return ComicComponent;
 }());
 ComicComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-comic',
         template: __webpack_require__("../../../../../src/app/comic/comic.component.html"),
         styles: [__webpack_require__("../../../../../src/app/comic/comic.component.css")]
@@ -821,7 +822,7 @@ var ComicsReadResolve = (function () {
     return ComicsReadResolve;
 }());
 ComicsReadResolve = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */]) === "function" && _a || Object])
 ], ComicsReadResolve);
 
@@ -851,7 +852,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n      {{comicsMap[comic.comic].attributes.publication_date}}\n      <a routerLink=\"/comic/{{comic.comic}}\"> {{comicsMap[comic.comic].attributes.title}}</a>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <a routerLink=\"/comic/{{new.id}}\">{{new.attributes.title}}\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"></a>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <a routerLink=\"/comic/{{update.id}}\">{{update.attributes.title}}\n        <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"></a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n      {{comicsMap[comic.comic].attributes.publication_date}}\n      <a routerLink=\"/comic/{{comic.comic}}\"> {{comicsMap[comic.comic].attributes.title}}</a>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues | orderBy: issue\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <a routerLink=\"/comic/{{new.id}}\">{{new.attributes.title}}\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"></a>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <a routerLink=\"/comic/{{update.id}}\">{{update.attributes.title}}\n        <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"></a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -902,7 +903,7 @@ var HomeComponent = (function () {
     return HomeComponent;
 }());
 HomeComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-home',
         template: __webpack_require__("../../../../../src/app/home/home.component.html"),
         styles: [__webpack_require__("../../../../../src/app/home/home.component.css")]
@@ -958,7 +959,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ImageViewerComponent = (function () {
     function ImageViewerComponent() {
-        this.onSwiped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */]();
+        this.onSwiped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.fullScreen = false;
     }
     ImageViewerComponent.prototype.toggleFullScreen = function () {
@@ -970,15 +971,15 @@ var ImageViewerComponent = (function () {
     return ImageViewerComponent;
 }());
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Input */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", String)
 ], ImageViewerComponent.prototype, "img", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Output */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
     __metadata("design:type", Object)
 ], ImageViewerComponent.prototype, "onSwiped", void 0);
 ImageViewerComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-image-viewer',
         template: __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.html"),
         styles: [__webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.css")]
@@ -1047,7 +1048,7 @@ var LoginComponent = (function () {
     return LoginComponent;
 }());
 LoginComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-login',
         template: __webpack_require__("../../../../../src/app/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/login/login.component.css")]
@@ -1057,67 +1058,6 @@ LoginComponent = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=login.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/news/news.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/news/news.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  news works!\n</p>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/news/news.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewsComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var NewsComponent = (function () {
-    function NewsComponent() {
-    }
-    NewsComponent.prototype.ngOnInit = function () {
-    };
-    return NewsComponent;
-}());
-NewsComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
-        selector: 'app-news',
-        template: __webpack_require__("../../../../../src/app/news/news.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/news/news.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], NewsComponent);
-
-//# sourceMappingURL=news.component.js.map
 
 /***/ }),
 
@@ -1147,7 +1087,7 @@ var ResolveService = (function () {
     return ResolveService;
 }());
 ResolveService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
 ], ResolveService);
 
 //# sourceMappingURL=resolve.service.js.map
@@ -1223,7 +1163,7 @@ var SearchComponent = (function () {
     return SearchComponent;
 }());
 SearchComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-search',
         template: __webpack_require__("../../../../../src/app/search/search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/search/search.component.css")]
@@ -1267,7 +1207,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["a" /* enableProdMode */])();
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
