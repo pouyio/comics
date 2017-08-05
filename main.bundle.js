@@ -1012,7 +1012,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row justify-content-center my-5\">\n  <div class=\"col-sm-6\">\n    <div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" (keyup.enter)=\"login(user)\" placeholder=\"User\" [(ngModel)]=\"user\">\n      <span class=\"input-group-btn\">\n        <button class=\"btn btn-primary\" type=\"button\" (click)=\"login(user)\">Login</button>\n      </span>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row justify-content-center my-5\">\n  <div class=\"col-sm-6\">\n    <div class=\"input-group\">\n      <input type=\"text\" autocapitalize=\"none\" class=\"form-control\" (keyup.enter)=\"login(user)\" placeholder=\"User\" [(ngModel)]=\"user\">\n      <span class=\"input-group-btn\">\n        <button class=\"btn btn-primary\" type=\"button\" (click)=\"login(user)\">Login</button>\n      </span>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
