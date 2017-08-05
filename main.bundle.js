@@ -90,6 +90,9 @@ var ApiService = (function (_super) {
     ApiService.prototype.markIssueRead = function (comic, issue, isRead) {
         return this.http.post(this.baseUrl + "/comic/" + comic, { issue: issue, read: isRead }, this.getOptions()).catch(this.handleError);
     };
+    ApiService.prototype.markComicWish = function (comic, wish) {
+        return this.http.post(this.baseUrl + "/comic/wish/" + comic, { wish: wish }, this.getOptions()).catch(this.handleError);
+    };
     ApiService.prototype.search = function (query) {
         return (this.http.get(this.baseUrl + "/comics/search/" + encodeURI(query), this.getOptions()).map(function (res) { return res.json(); }).catch(this.handleError));
     };
@@ -482,12 +485,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var BaseService = (function () {
+    // protected baseUrl: string = 'http://ec2-52-57-145-92.eu-central-1.compute.amazonaws.com:8080';
     function BaseService(http, auth, resolver) {
         this.http = http;
         this.auth = auth;
         this.resolver = resolver;
-        // protected baseUrl: string = 'http://192.168.1.33:8080';
-        this.baseUrl = 'http://ec2-52-57-145-92.eu-central-1.compute.amazonaws.com:8080';
+        this.baseUrl = 'http://192.168.1.33:8080';
     }
     BaseService.prototype.getOptions = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]();
@@ -704,7 +707,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic/comic.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div class=\"row\">\n    <h1 class=\"col-12 display-4\">{{comic.data.attributes.title}}</h1>\n    <p class=\"col-12\"><mark>{{comic.data.attributes.status}}.</mark> {{comic.data.attributes.summary}}</p>\n\n    <div class=\"col-sm-4 col-6\">\n      <img class=\"img-fluid\" [src]=\"comic.data.links.cover\" alt=\"cover\">\n    </div>\n\n    <div class=\"col-sm-4 col-6\">\n      <h2>Info</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\">\n            <strong>Artist</strong>: {{comic.data.relationships.artist.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Publisher</strong>: {{comic.data.relationships.publisher.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Writer</strong>: {{comic.data.relationships.writer.id}}\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-4\">\n      <div class=\"row\">\n        <div class=\"col-6 col-sm-12\">\n          <h2>Genres</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              <span class=\"badge badge-default m-1\" *ngFor=\"let genre of genres\">{{genre.id}}</span>\n            </li>\n          </ul>\n        </div>\n        <div class=\"col-6 col-sm-12\">\n          <h2>Publication</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              {{comic.data.attributes.publication_date}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-12 col-sm-10 offset-sm-1\">\n      <h2>Issues</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of issues; let i = index\">\n          <a routerLink=\"/comic/{{comic.data.id}}/{{getIssueLink(issue.links.self)}}\">{{issue.attributes.title}}</a>\n          <div class=\"\">\n            <button (click)=\"downloadIssue(comic.data.id, getIssueLink(issue.links.self))\" type=\"button\" class=\"btn btn-sm btn-outline-warning\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n            PDF\n          </button>\n            <button [class.active]=\"issuesRead[issue.id]\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead(issue.id)\">\n            Read\n          </button>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n\n</div>\n\n<ng-template #noAvailable>\n  <div class=\"alert alert-danger\" role=\"alert\">\n    Comic not found.\n  </div>\n</ng-template>\n"
+module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div class=\"row\">\n    <h1 class=\"col-12 display-4\">{{comic.data.attributes.title}}\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-warning': 'btn-outline-warning'\" (click)=\"toggleComicWish()\">Wish</button>\n    </h1>\n    <p class=\"col-12\"><mark>{{comic.data.attributes.status}}.</mark> {{comic.data.attributes.summary}}</p>\n\n    <div class=\"col-sm-4 col-6\">\n      <img class=\"img-fluid\" [src]=\"comic.data.links.cover\" alt=\"cover\">\n    </div>\n\n    <div class=\"col-sm-4 col-6\">\n      <h2>Info</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\">\n            <strong>Artist</strong>: {{comic.data.relationships.artist.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Publisher</strong>: {{comic.data.relationships.publisher.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Writer</strong>: {{comic.data.relationships.writer.id}}\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-4\">\n      <div class=\"row\">\n        <div class=\"col-6 col-sm-12\">\n          <h2>Genres</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              <span class=\"badge badge-default m-1\" *ngFor=\"let genre of genres\">{{genre.id}}</span>\n            </li>\n          </ul>\n        </div>\n        <div class=\"col-6 col-sm-12\">\n          <h2>Publication</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              {{comic.data.attributes.publication_date}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-12 col-sm-10 offset-sm-1\">\n      <h2>Issues</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of issues; let i = index\">\n          <a routerLink=\"/comic/{{comic.data.id}}/{{getIssueLink(issue.links.self)}}\">{{issue.attributes.title}}</a>\n          <div class=\"\">\n            <button (click)=\"downloadIssue(comic.data.id, getIssueLink(issue.links.self))\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n            PDF\n          </button>\n            <button [class.active]=\"issuesRead[issue.id]\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead(issue.id)\">\n            Read\n          </button>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n\n</div>\n\n<ng-template #noAvailable>\n  <div class=\"alert alert-danger\" role=\"alert\">\n    Comic not found.\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -756,6 +759,14 @@ var ComicComponent = (function () {
         this.api.markIssueRead(this.comic.data.id, id, isRead).subscribe(function (res) {
             if (res.ok)
                 _this.issuesRead[id] = isRead;
+        });
+    };
+    ComicComponent.prototype.toggleComicWish = function () {
+        var _this = this;
+        var isWish = !this.comic.wish;
+        this.api.markComicWish(this.comic.data.id, isWish).subscribe(function (res) {
+            if (res.ok)
+                _this.comic.wish = isWish;
         });
     };
     ComicComponent.prototype.getIssueLink = function (link) {
@@ -814,7 +825,7 @@ var ComicsReadResolve = (function () {
         this.resolve = function () {
             var readShared$ = _this.api.getComicsRead().share();
             var comics$ = readShared$.switchMap(function (cs) {
-                return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin.apply(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"], cs.map(function (c) { return _this.api.getComic(c.comic); }));
+                return cs.length ? __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin.apply(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"], cs.map(function (c) { return _this.api.getComic(c.comic); })) : __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].of([]);
             });
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin(readShared$, _this.api.getNews(), comics$);
         };
@@ -852,7 +863,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n      {{comicsMap[comic.comic].attributes.publication_date}}\n      <a routerLink=\"/comic/{{comic.comic}}\"> {{comicsMap[comic.comic].attributes.title}}</a>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues | orderBy: issue\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <a routerLink=\"/comic/{{new.id}}\">{{new.attributes.title}}\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"></a>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <a routerLink=\"/comic/{{update.id}}\">{{update.attributes.title}}\n        <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"></a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<h1 class=\"text-center\">Read & Wished</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{comic.comic}}\">{{comicsMap[comic.comic].attributes.title}} </button>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-warning': 'btn-outline-warning'\" (click)=\"toggleComicWish(comic)\">Wish</button>\n      <div>\n        <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n        <span class=\"small\">{{comicsMap[comic.comic].attributes.publication_date}}</span>\n      </div>\n    </span>\n    <span class=\"badge badge-default m-1\" *ngFor=\"let issue of comic.issues | orderBy: issue\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{new.id}}\">\n            <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"> {{new.attributes.title}}\n          </button>\n          <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"new.wish? 'btn-warning': 'btn-outline-warning'\" (click)=\"toggleComicWish(new)\">Wish</button>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{update.id}}\">\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"> {{update.attributes.title}}\n        </button>\n        <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"update.wish? 'btn-warning': 'btn-outline-warning'\" (click)=\"toggleComicWish(update)\">Wish</button>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -862,6 +873,7 @@ module.exports = "<h1 class=\"text-center\">Read</h1>\n<ul class=\"list-group\">
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -874,10 +886,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var HomeComponent = (function () {
-    function HomeComponent(route) {
+    function HomeComponent(route, api) {
         var _this = this;
         this.route = route;
+        this.api = api;
         this._map = function (acc, comic) {
             acc[comic.id] = comic;
             return acc;
@@ -900,6 +914,14 @@ var HomeComponent = (function () {
             .reduce(this._map, {});
         var _a;
     };
+    HomeComponent.prototype.toggleComicWish = function (comic) {
+        var isWish = !comic.wish;
+        this.api.markComicWish(comic.comic || comic.id, isWish).subscribe(function (res) {
+            if (res.ok) {
+                comic.wish = isWish;
+            }
+        });
+    };
     return HomeComponent;
 }());
 HomeComponent = __decorate([
@@ -908,10 +930,10 @@ HomeComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/home/home.component.html"),
         styles: [__webpack_require__("../../../../../src/app/home/home.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */]) === "function" && _b || Object])
 ], HomeComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=home.component.js.map
 
 /***/ }),
@@ -1115,7 +1137,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item d-flex justify-content-between\">\n      <a routerLink=\"/comic/{{item.id}}\">{{item.attributes.title}}</a>\n      <img style=\"width:4em\" class=\"img-fluid\" [src]=\"item.links.cover\" alt=\"cover\">\n      <div>\n        <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n        <small>{{item.attributes.summary}}</small>\n      </div>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item d-flex justify-content-between\">\n      <img style=\"width:4em\" class=\"img-fluid\" [src]=\"item.links.cover\" alt=\"cover\">\n      <a routerLink=\"/comic/{{item.id}}\">{{item.attributes.title}}</a>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"item.wish? 'btn-warning': 'btn-outline-warning'\" (click)=\"toggleComicWish(item)\">Wish</button>\n      <div>\n        <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n        <small>{{item.attributes.summary}}</small>\n      </div>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -1160,6 +1182,13 @@ var SearchComponent = (function () {
             .do(function (e) { return _this.loading = false; });
         this.listed = __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].merge(this.routeChangeO, this.typeAheadO);
     }
+    SearchComponent.prototype.toggleComicWish = function (comic) {
+        var isWish = !comic.wish;
+        this.api.markComicWish(comic.id, isWish).subscribe(function (res) {
+            if (res.ok)
+                comic.wish = isWish;
+        });
+    };
     return SearchComponent;
 }());
 SearchComponent = __decorate([
