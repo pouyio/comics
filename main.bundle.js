@@ -490,7 +490,8 @@ var BaseService = (function () {
         this.auth = auth;
         this.resolver = resolver;
         // protected baseUrl: string = 'http://192.168.1.33:8080';
-        this.baseUrl = 'http://ec2-52-57-145-92.eu-central-1.compute.amazonaws.com:8080';
+        // protected baseUrl: string = 'http://localhost:8080';
+        this.baseUrl = 'http://ec2-52-57-163-72.eu-central-1.compute.amazonaws.com:8080';
     }
     BaseService.prototype.getOptions = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
