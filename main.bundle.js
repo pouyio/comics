@@ -202,7 +202,6 @@ var _a, _b, _c, _d, _e, _f;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export MyHammerConfig */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
@@ -227,16 +226,6 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__image_viewer_image_viewer_component__ = __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -264,22 +253,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-
-var MyHammerConfig = (function (_super) {
-    __extends(MyHammerConfig, _super);
-    function MyHammerConfig() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MyHammerConfig.prototype.buildHammer = function (element) {
-        var mc = new Hammer(element, {
-            touchAction: "auto",
-        });
-        // mc.get('pinch').set({enable: true});
-        return mc;
-    };
-    return MyHammerConfig;
-}(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["c" /* HammerGestureConfig */]));
 
 var AppModule = (function () {
     function AppModule() {
@@ -313,8 +286,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__resolve_service__["a" /* ResolveService */],
             __WEBPACK_IMPORTED_MODULE_13__comic_resolve__["a" /* ComicResolve */],
             __WEBPACK_IMPORTED_MODULE_12__comics_read_resolve__["a" /* ComicsReadResolve */],
-            __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__["a" /* ComicIssueResolve */],
-            { provide: __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["b" /* HAMMER_GESTURE_CONFIG */], useClass: MyHammerConfig }
+            __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__["a" /* ComicIssueResolve */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* AppComponent */]]
     })
@@ -593,7 +565,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic-issue/comic-issue.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"\" style=\"width:80%\">\n  <app-image-viewer (onSwiped)=\"onSwiped($event)\" [img]=\"issue.attributes.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n    <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" max=\"{{issue.attributes.pages.length - 1}}\" [(ngModel)]=\"page\">\n  </div>\n\n  <div class=\"btn-group col-6\">\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page-1\" [disabled]=\"page === 0\">prev</button>\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page+1\" [disabled]=\"page === lastPage\">next</button>\n  </div>\n</div>\n"
+module.exports = "<div class=\"m-auto\" style=\"width:60%\">\n  <app-image-viewer (onSwiped)=\"onSwiped($event)\" [img]=\"issue.attributes.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n    <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" max=\"{{issue.attributes.pages.length - 1}}\" [(ngModel)]=\"page\">\n  </div>\n\n  <div class=\"btn-group col-6\">\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page-1\" [disabled]=\"page === 0\">prev</button>\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page+1\" [disabled]=\"page === lastPage\">next</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -947,7 +919,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".full-screen {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  z-index: 10;\n}\n", ""]);
+exports.push([module.i, ".full-screen {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  z-index: 10;\n}\n\n.button-hover {\n  outline: none !important;\n  position: fixed;\n  z-index: 20;\n  height: 100vh;\n  padding: 0;\n  margin: 0;\n  width: 20vw;\n  top: 0;\n  background-color: rgba(0,0,0,0);\n  border: none;\n}\n\n.button-prev {\n  left: 0;\n}\n.button-next {\n  right: 0;\n}\n", ""]);
 
 // exports
 
@@ -960,7 +932,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/image-viewer/image-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<img (swipeleft)=\"swipe(1)\" (swiperight)=\"swipe(-1)\" [class.full-screen]=\"fullScreen\" class=\"img-fluid\" [src]=\"img\" alt=\"comic image\" (click)=\"toggleFullScreen()\">\n"
+module.exports = "<img [class.full-screen]=\"fullScreen\" class=\"img-fluid\" [src]=\"img\" alt=\"comic image\" (click)=\"toggleFullScreen()\">\n\n<div [hidden]=\"!fullScreen\">\n  <button class=\"button-hover button-prev\" (click)=\"swipe(-1)\"></button>\n  <button class=\"button-hover button-next\" (click)=\"swipe(1)\"></button>\n</div>\n"
 
 /***/ }),
 
