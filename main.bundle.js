@@ -1,15 +1,19 @@
 webpackJsonp(["main"],{
 
-/***/ "../../../../../src lazy recursive":
+/***/ "../../../../../src/$$_gendir lazy recursive":
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
-	return new Promise(function(resolve, reject) { reject(new Error("Cannot find module '" + req + "'.")); });
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
 }
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = "../../../../../src lazy recursive";
+webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 
 /***/ }),
 
@@ -19,7 +23,7 @@ webpackEmptyAsyncContext.id = "../../../../../src lazy recursive";
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__base_service__ = __webpack_require__("../../../../../src/app/base.service.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -45,8 +49,8 @@ var ApiService = (function (_super) {
     function ApiService() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.login = function (user) {
-            return _this.http.post(_this.baseUrl + "/login", { user: user }).map(function (r) {
-                _this.auth.setToken(r.text());
+            return _this.http.post(_this.baseUrl + "/login", { user: user }, { responseType: 'text' }).map(function (token) {
+                _this.auth.setToken(token);
                 return { ok: 1 };
             });
         };
@@ -56,48 +60,49 @@ var ApiService = (function (_super) {
     ApiService.prototype.getComic = function (id) {
         var _this = this;
         this.resolver.setState(true);
-        return this.http.get(this.baseUrl + "/comic/" + id, this.getOptions())
-            .map(function (res) { return res.json(); })
+        return this.http.get(this.baseUrl + "/comic/" + id)
             .do(function (e) { return _this.resolver.setState(false); })
             .catch(this.handleError);
     };
     ApiService.prototype.getComicsRead = function () {
         var _this = this;
         this.resolver.setState(true);
-        return this.http.get(this.baseUrl + "/comics/read", this.getOptions())
-            .map(function (r) { return r.json(); })
+        return this.http.get(this.baseUrl + "/comics/read")
             .do(function (e) { return _this.resolver.setState(false); })
             .catch(this.handleError);
     };
     ApiService.prototype.getComicIssue = function (id, issue) {
         var _this = this;
         this.resolver.setState(true);
-        return this.http.get(this.baseUrl + "/comic/" + id + "/" + issue, this.getOptions())
-            .map(function (res) { return res.json(); })
+        return this.http.get(this.baseUrl + "/comic/" + id + "/" + issue)
             .do(function (e) { return _this.resolver.setState(false); })
             .catch(this.handleError);
     };
     ApiService.prototype.getNews = function () {
-        return this.http.get(this.baseUrl + "/comics/news", this.getOptions())
-            .map(function (res) { return res.json(); })
+        return this.http.get(this.baseUrl + "/comics/news")
             .catch(this.handleError);
     };
-    ApiService.prototype.downloadComicIssue = function (id, issue) {
-        return this.http.post(this.baseUrl + "/comic/" + id + "/" + issue, {}, { responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* ResponseContentType */].Blob }).map(function (res) {
-            return new Blob([res.blob()], { type: 'application/pdf' });
-        }).catch(this.handleError);
-    };
-    ApiService.prototype.markIssueRead = function (comic, issue, isRead) {
-        return this.http.post(this.baseUrl + "/comic/" + comic, { issue: issue, read: isRead }, this.getOptions()).catch(this.handleError);
+    // downloadComicIssue(id: string, issue: string): Observable<any> {
+    //
+    //   return this.http.post(`${this.baseUrl}/comic/${id}/${issue}`,{}, {responseType : ResponseContentType.Blob}).map((res: any) => {
+    //     return new Blob([res.blob()], {type: 'application/pdf'});
+    //     }).catch(this.handleError);
+    // }
+    ApiService.prototype.updateIssue = function (comic, issue, status) {
+        return this.http.post(this.baseUrl + "/comic/" + comic + "/" + issue, status).catch(this.handleError);
     };
     ApiService.prototype.markComicWish = function (comic, wish) {
-        return this.http.post(this.baseUrl + "/comic/wish/" + comic, { wish: wish }, this.getOptions()).catch(this.handleError);
+        return this.http.post(this.baseUrl + "/comic/" + comic, { wish: wish }).catch(this.handleError);
     };
-    ApiService.prototype.search = function (query) {
-        return (this.http.get(this.baseUrl + "/comics/search/" + encodeURI(query), this.getOptions()).map(function (res) { return res.json(); }).catch(this.handleError));
+    ApiService.prototype.search = function (query, exact) {
+        if (exact === void 0) { exact = false; }
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]().set('query', encodeURI(query));
+        if (exact)
+            params.set('exact', '1');
+        return (this.http.get(this.baseUrl + "/comics/search", { params: params }).catch(this.handleError));
     };
     ApiService.prototype.getImage = function (url) {
-        return this.http.post(this.baseUrl + "/encode", { url: url }, this.getOptions()).map(function (res) { return res.json(); }).catch(this.handleError);
+        return this.http.post(this.baseUrl + "/encode", { url: url }).catch(this.handleError);
     };
     return ApiService;
 }(__WEBPACK_IMPORTED_MODULE_2__base_service__["a" /* BaseService */]));
@@ -206,11 +211,11 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__ = __webpack_require__("../../../../ngx-order-pipe/dist/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__ = __webpack_require__("../../../../ngx-order-pipe/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__interceptor__ = __webpack_require__("../../../../../src/app/interceptor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
@@ -226,6 +231,9 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__image_viewer_image_viewer_component__ = __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__home_home_item_home_item_component__ = __webpack_require__("../../../../../src/app/home/home-item/home-item.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__comic_comic_presentation_comic_presentation_component__ = __webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__comic_issue_issue_presentation_issue_presentation_component__ = __webpack_require__("../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -234,6 +242,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
+
+
+
+// import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -268,16 +280,19 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_17__search_search_component__["a" /* SearchComponent */],
             __WEBPACK_IMPORTED_MODULE_18__home_home_component__["a" /* HomeComponent */],
             __WEBPACK_IMPORTED_MODULE_19__image_viewer_image_viewer_component__["a" /* ImageViewerComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__login_login_component__["a" /* LoginComponent */]
+            __WEBPACK_IMPORTED_MODULE_20__login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__home_home_item_home_item_component__["a" /* HomeItemComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__comic_comic_presentation_comic_presentation_component__["a" /* ComicPresentationComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__comic_issue_issue_presentation_issue_presentation_component__["a" /* IssuePresentationComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["e" /* ReactiveFormsModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_http__["c" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_6_ngx_order_pipe__["OrderModule"],
-            __WEBPACK_IMPORTED_MODULE_5__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_21__app_routes__["a" /* AppRoutes */])
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* ReactiveFormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["c" /* HttpClientModule */],
+            __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__["OrderModule"],
+            // NgbModule.forRoot(),
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_21__app_routes__["a" /* AppRoutes */]),
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_9__auth_service__["a" /* AuthService */],
@@ -286,7 +301,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__resolve_service__["a" /* ResolveService */],
             __WEBPACK_IMPORTED_MODULE_13__comic_resolve__["a" /* ComicResolve */],
             __WEBPACK_IMPORTED_MODULE_12__comics_read_resolve__["a" /* ComicsReadResolve */],
-            __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__["a" /* ComicIssueResolve */]
+            __WEBPACK_IMPORTED_MODULE_11__comic_issue_resolve__["a" /* ComicIssueResolve */],
+            {
+                provide: __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
+                useClass: __WEBPACK_IMPORTED_MODULE_6__interceptor__["a" /* Interceptor */],
+                multi: true,
+            }
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* AppComponent */]]
     })
@@ -406,7 +426,7 @@ var AuthService = (function () {
         this.getToken = function () {
             if (_this.token)
                 return _this.token;
-            return localStorage.getItem('token');
+            return localStorage.getItem('token') || '';
         };
         this.setToken = function (tk) {
             localStorage.setItem('token', tk);
@@ -438,10 +458,11 @@ var _a;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -456,6 +477,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var BaseService = (function () {
     function BaseService(http, auth, resolver) {
         this.http = http;
@@ -465,21 +487,10 @@ var BaseService = (function () {
         // protected baseUrl: string = 'http://localhost:8080';
         this.baseUrl = 'http://ec2-52-57-163-72.eu-central-1.compute.amazonaws.com:8080';
     }
-    BaseService.prototype.getOptions = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-        headers.append('content-type', 'application/json; charset=utf-8');
-        headers.append('Accept', 'application/json; charset=utf-8');
-        headers.append('Authorization', this.auth.getToken());
-        var opts = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return opts;
-    };
-    BaseService.prototype.extractData = function (res) {
-        return res.json() || {};
-    };
     BaseService.prototype.handleError = function (error) {
         // In a real world app, you might use a remote logging infrastructure
         var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Response */]) {
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Response */]) {
             var body = error.json() || '';
             var err = body.error || JSON.stringify(body);
             errMsg = error.status + " - " + (error.statusText || '') + " " + err;
@@ -488,13 +499,13 @@ var BaseService = (function () {
             errMsg = error.message ? error.message : error.toString();
         }
         console.error(errMsg);
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
+        return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].throw(errMsg);
     };
     return BaseService;
 }());
 BaseService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__resolve_service__["a" /* ResolveService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["b" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["b" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__resolve_service__["a" /* ResolveService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__resolve_service__["a" /* ResolveService */]) === "function" && _c || Object])
 ], BaseService);
 
 var _a, _b, _c;
@@ -528,9 +539,7 @@ var ComicIssueResolve = (function () {
         this.resolver = resolver;
     }
     ComicIssueResolve.prototype.resolve = function (route) {
-        var id = route.paramMap.get('id');
-        var iss = route.paramMap.get('issue');
-        return this.api.getComicIssue(id, iss).map(function (i) { return i.data; });
+        return this.api.getComicIssue(route.paramMap.get('id'), route.paramMap.get('issue'));
     };
     return ComicIssueResolve;
 }());
@@ -565,7 +574,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic-issue/comic-issue.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"m-auto\" style=\"width:60%\">\n  <app-image-viewer (onSwiped)=\"onSwiped($event)\" [img]=\"issue.attributes.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n    <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" max=\"{{issue.attributes.pages.length - 1}}\" [(ngModel)]=\"page\">\n  </div>\n\n  <div class=\"btn-group col-6\">\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page-1\" [disabled]=\"page === 0\">prev</button>\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"page = page+1\" [disabled]=\"page === lastPage\">next</button>\n  </div>\n</div>\n"
+module.exports = "<app-issue-presentation [issue]=\"issue\" (pageRead)=\"updatePage($event)\"><app-issue-presentation>\n"
 
 /***/ }),
 
@@ -591,18 +600,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ComicIssueComponent = (function () {
     function ComicIssueComponent(api, route) {
+        var _this = this;
         this.api = api;
         this.route = route;
-        this.page = 0;
+        this.updatePage = function (page) {
+            _this.api.updateIssue(_this.route.snapshot.params.id, _this.route.snapshot.params.issue, { page: page }).subscribe(null);
+        };
     }
     ComicIssueComponent.prototype.ngOnInit = function () {
         this.issue = this.route.snapshot.data['issue'];
-        this.lastPage = this.issue.attributes.pages.length - 1;
-    };
-    ComicIssueComponent.prototype.onSwiped = function (e) {
-        if ((this.page > 0 && e < 0) || (this.page < this.lastPage && e > 0)) {
-            this.page += e;
-        }
     };
     return ComicIssueComponent;
 }());
@@ -617,6 +623,92 @@ ComicIssueComponent = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=comic-issue.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"issue\">\n\n<div class=\"m-auto\" style=\"width:60%\">\n  <app-image-viewer (onSwiped)=\"onPageChange($event)\" [img]=\"issue.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n    <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" [max]=\"issue.pages.length - 1\" [(ngModel)]=\"page\" (change)=\"onChange(page)\">\n  </div>\n\n  <div class=\"btn-group col-6\">\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(-1)\" [disabled]=\"page === 0\">prev</button>\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(+1)\" [disabled]=\"page === lastPage\">next</button>\n  </div>\n</div>\n\n\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IssuePresentationComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var IssuePresentationComponent = (function () {
+    function IssuePresentationComponent() {
+        var _this = this;
+        this.pageRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.page = 0;
+        this.lastPage = 0;
+        this.setPage = function (page) {
+            _this.page = page;
+            _this.pageRead.emit(_this.page);
+        };
+        this.onPageChange = function (advance) {
+            _this.page += advance;
+            _this.setPage(_this.page);
+        };
+        this.onChange = function (page) { return _this.setPage(page); };
+    }
+    IssuePresentationComponent.prototype.ngOnInit = function () {
+        if (this.issue) {
+            this.page = this.issue.info.page | 0;
+            this.lastPage = this.issue.pages.length - 1;
+        }
+    };
+    return IssuePresentationComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], IssuePresentationComponent.prototype, "issue", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], IssuePresentationComponent.prototype, "pageRead", void 0);
+IssuePresentationComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-issue-presentation',
+        template: __webpack_require__("../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], IssuePresentationComponent);
+
+//# sourceMappingURL=issue-presentation.component.js.map
 
 /***/ }),
 
@@ -659,6 +751,100 @@ var _a, _b;
 
 /***/ }),
 
+/***/ "../../../../../src/app/comic/comic-presentation/comic-presentation.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "progress {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 5%;\n  color: #0063a6;\n  -webkit-appearance: none;\n}\n\nprogress::-webkit-progress-bar {\n  background-color: hsla(0, 0%, 100%, 0);\n}\n\nprogress::-webkit-progress-value {\n  background-color: hsla(120, 75%, 40%, 0.77);\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/comic/comic-presentation/comic-presentation.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <h1 class=\"col-12 display-4 text-center\">{{comic.attributes.title}}\n    <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleWish.emit()\">Following <i class=\"fa\" [ngClass]=\"[comic.wish ? 'fa-clock-o': '']\"></i></button>\n  </h1>\n  <p class=\"col-12\"><mark>{{comic.attributes.status}}.</mark> {{comic.attributes.summary}}</p>\n\n  <div class=\"col-sm-4 col-6\">\n    <img class=\"img-fluid\" [src]=\"comic.cover\" alt=\"cover\">\n  </div>\n\n  <div class=\"col-sm-4 col-6\">\n    <h2 class=\"text-center\">Info</h2>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\">\n        <strong>Artist</strong>: {{extractInfo('artists')}}\n      </li>\n      <li class=\"list-group-item\">\n        <strong>Publisher</strong>: {{extractInfo('publishers')}}\n      </li>\n      <li class=\"list-group-item\">\n        <strong>Writer</strong>: {{extractInfo('writers')}}\n      </li>\n    </ul>\n  </div>\n\n  <div class=\"col-sm-4\">\n    <div class=\"row\">\n      <div class=\"col-6 col-sm-12\">\n        <h2 class=\"text-center\">Genres</h2>\n        <ul class=\"list-group\">\n          <li class=\"list-group-item\">\n            <span class=\"badge badge-secondary m-1\" *ngFor=\"let genre of filterInfo('genres')\">{{genre.id}}</span>\n          </li>\n        </ul>\n      </div>\n      <div class=\"col-6 col-sm-12\">\n        <h2 class=\"text-center\">Publication</h2>\n        <ul class=\"list-group\">\n          <li class=\"list-group-item\">\n            {{comic.attributes.publication_date}}\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"row\">\n  <div class=\"col-12\">\n    <h2 class=\"text-center\">Issues</h2>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of getIssues()\">\n        <a [routerLink]=\"['/comic', comic._id, issue.id]\">{{issue.attributes.title}}</a>\n        <button [class.active]=\"issue.read\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead.emit({issue: issue.id, val: !issue.read})\">\n          Read <i class=\"fa\" [ngClass]=\"issue.read ? 'fa-check': ''\"></i>\n        </button>\n        <progress [value]=\"getPercentagePages(issue)\" max=\"100\"></progress>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/comic/comic-presentation/comic-presentation.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComicPresentationComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ComicPresentationComponent = (function () {
+    function ComicPresentationComponent() {
+        var _this = this;
+        this.toggleWish = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.markIssueRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.extractInfo = function (type) {
+            var info = _this.filterInfo(type);
+            if (info.length && info[0].attributes.name) {
+                return info.map(function (i) { return i.attributes.name; }).join(', ');
+            }
+            if (info.length && info[0].attributes.first_name) {
+                return info.map(function (i) { return i.attributes.first_name + " " + i.attributes.last_name; }).join(', ');
+            }
+            return info.map(function (i) { return i.id; }).join(', ');
+        };
+        this.getIssues = function () {
+            return _this.filterInfo('issues').sort(function (a, b) { return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' }); });
+        };
+        this.getPercentagePages = function (issue) { return Math.round((_this.comic.included.find(function (i) { return i.id === issue.id; }).page / _this.getTotalPages(issue)) * 100); };
+        this.filterInfo = function (type) { return _this.comic.included.filter(function (i) { return i.type === type; }); };
+        this.getTotalPages = function (issue) {
+            var a = _this.comic.included.find(function (i) { return i.id === issue.id; }).pages;
+            return a ? a.length - 1 : 0.01;
+        };
+    }
+    ComicPresentationComponent.prototype.ngOnInit = function () { };
+    return ComicPresentationComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], ComicPresentationComponent.prototype, "comic", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], ComicPresentationComponent.prototype, "toggleWish", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], ComicPresentationComponent.prototype, "markIssueRead", void 0);
+ComicPresentationComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-comic-presentation',
+        template: __webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], ComicPresentationComponent);
+
+//# sourceMappingURL=comic-presentation.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/comic/comic.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -680,7 +866,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic/comic.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div class=\"row\">\n    <h1 class=\"col-12 display-4\">{{comic.data.attributes.title}}\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish()\">Wish</button>\n    </h1>\n    <p class=\"col-12\"><mark>{{comic.data.attributes.status}}.</mark> {{comic.data.attributes.summary}}</p>\n\n    <div class=\"col-sm-4 col-6\">\n      <img class=\"img-fluid\" [src]=\"comic.data.links.cover\" alt=\"cover\">\n    </div>\n\n    <div class=\"col-sm-4 col-6\">\n      <h2>Info</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\">\n            <strong>Artist</strong>: {{comic.data.relationships.artist.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Publisher</strong>: {{comic.data.relationships.publisher.id}}\n        </li>\n        <li class=\"list-group-item\">\n          <strong>Writer</strong>: {{comic.data.relationships.writer.id}}\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-4\">\n      <div class=\"row\">\n        <div class=\"col-6 col-sm-12\">\n          <h2>Genres</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              <span class=\"badge badge-secondary m-1\" *ngFor=\"let genre of genres\">{{genre.id}}</span>\n            </li>\n          </ul>\n        </div>\n        <div class=\"col-6 col-sm-12\">\n          <h2>Publication</h2>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n              {{comic.data.attributes.publication_date}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-12 col-sm-10 offset-sm-1\">\n      <h2>Issues</h2>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between\" *ngFor=\"let issue of issues; let i = index\">\n          <a routerLink=\"/comic/{{comic.data.id}}/{{getIssueLink(issue.links.self)}}\">{{issue.attributes.title}}</a>\n          <div class=\"\">\n            <!-- <button (click)=\"downloadIssue(comic.data.id, getIssueLink(issue.links.self))\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n            PDF\n          </button> -->\n            <button [class.active]=\"issuesRead[issue.id]\" type=\"button\" class=\"btn btn-outline-primary btn-sm\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead(issue.id)\">\n            Read\n          </button>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n\n</div>\n\n<ng-template #noAvailable>\n  <div class=\"alert alert-danger\" role=\"alert\">\n    Comic not found.\n  </div>\n</ng-template>\n"
+module.exports = "<app-comic-presentation [comic]=\"comic\" (toggleWish)=\"toggleWish()\" (markIssueRead)=\"markIssueRead($event)\"></app-comic-presentation>\n"
 
 /***/ }),
 
@@ -692,8 +878,6 @@ module.exports = "<div *ngIf=\"comic && comic.data; else noAvailable\">\n  <div 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_file_saver__ = __webpack_require__("../../../../file-saver/FileSaver.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_file_saver__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -706,54 +890,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var ComicComponent = (function () {
     function ComicComponent(api, route) {
         var _this = this;
         this.api = api;
         this.route = route;
-        this._curateDate = function (comic) {
-            _this.issues = comic.included.filter(function (inc) { return inc.type === 'issues'; }).sort(function (a, b) { return a.links.self.localeCompare(b.links.self, undefined, { numeric: true, sensitivity: 'base' }); });
-            _this.issuesRead = _this.issues.reduce(function (acc, issue) {
-                var found = !!_this.isRead(issue.id);
-                acc[issue.id] = found;
-                return acc;
-            }, []);
-            _this.genres = comic.data.relationships.genres;
+        this.toggleWish = function () {
+            var isWish = !_this.comic.wish;
+            _this.api.markComicWish(_this.comic._id, isWish).subscribe(function (res) {
+                if (res.ok)
+                    _this.comic.wish = isWish;
+            });
         };
-        this.route.data.subscribe(function (d) {
-            _this.comic = d.comic;
-            _this._curateDate(_this.comic);
-        });
+        this.markIssueRead = function (e) {
+            _this.api.updateIssue(_this.comic._id, e.issue, { read: e.val }).subscribe(function (res) {
+                if (res.ok) {
+                    var ix = _this.comic.included.findIndex(function (i) { return i.id === e.issue; });
+                    _this.comic.included[ix].read = e.val;
+                }
+            });
+        };
+        this.route.data.subscribe(function (d) { return _this.comic = d.comic; });
     }
-    ComicComponent.prototype.markIssueRead = function (id) {
-        var _this = this;
-        var isRead = !this.issuesRead[id];
-        this.api.markIssueRead(this.comic.data.id, id, isRead).subscribe(function (res) {
-            if (res.ok)
-                _this.issuesRead[id] = isRead;
-        });
-    };
-    ComicComponent.prototype.toggleComicWish = function () {
-        var _this = this;
-        var isWish = !this.comic.wish;
-        this.api.markComicWish(this.comic.data.id, isWish).subscribe(function (res) {
-            if (res.ok)
-                _this.comic.wish = isWish;
-        });
-    };
-    ComicComponent.prototype.getIssueLink = function (link) {
-        var arr = link.split('/');
-        return arr[arr.length - 1];
-    };
-    ComicComponent.prototype.downloadIssue = function (comicId, issueId) {
-        this.api.downloadComicIssue(comicId, issueId).subscribe(function (res) {
-            __WEBPACK_IMPORTED_MODULE_3_file_saver__["saveAs"](res, "comic.pdf");
-        });
-    };
-    ComicComponent.prototype.isRead = function (issueId) {
-        return this.comic.issuesRead.find(function (issue) { return issue === issueId; });
-    };
     return ComicComponent;
 }());
 ComicComponent = __decorate([
@@ -798,9 +956,9 @@ var ComicsReadResolve = (function () {
         this.resolve = function () {
             var readShared$ = _this.api.getComicsRead().share();
             var comics$ = readShared$.switchMap(function (cs) {
-                return cs.length ? __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin.apply(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"], cs.map(function (c) { return _this.api.getComic(c.comic); })) : __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].of([]);
+                return cs.length ? __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin.apply(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"], cs.map(function (c) { return _this.api.getComic(c._id); })) : __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].of([]);
             });
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin(readShared$, _this.api.getNews(), comics$);
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].forkJoin(readShared$, comics$);
         };
     }
     return ComicsReadResolve;
@@ -812,6 +970,93 @@ ComicsReadResolve = __decorate([
 
 var _a;
 //# sourceMappingURL=comics-read-resolve.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/home/home-item/home-item.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/home/home-item/home-item.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n  <button class=\"btn btn-sm btn-outline-primary\" [routerLink]=\"['/comic', comic._id]\">{{comicsMap.get(comic._id).attributes.title}} </button>\n  <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleButton.emit(comic)\">Following <i class=\"fa\" [ngClass]=\"[comic.wish ? 'fa-clock-o': '']\"></i></button>\n  <span>\n    <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic._id)\"> </i>\n    <span class=\"small\">{{comicsMap.get(comic._id).attributes.publication_date}}</span>\n  </span>\n</div>\n<div>\n  <span *ngFor=\"let issue of getIssues(comic)\">\n    <a [routerLink]=\"['/comic', comic._id, issue]\" *ngIf=\"getPercentagePages(comic, issue) || comic[issue].read\">\n      <span class=\"badge m-1\" [ngClass]=\"[comic[issue].read ? 'badge-primary': 'badge-secondary']\">\n        <a class=\"text-white\">#{{getIssueNumber(comic._id, issue)}} </a>\n        <span *ngIf=\"!comic[issue].read; else completed\">{{getPercentagePages(comic, issue)}}%</span>\n        <ng-template #completed>\n          <i class=\"fa fa-check-circle\"></i>\n        </ng-template>\n      </span>\n    </a>\n  </span>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/home/home-item/home-item.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeItemComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var HomeItemComponent = (function () {
+    function HomeItemComponent() {
+        var _this = this;
+        this.toggleButton = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.getIssues = function (comic) { return Object.keys(comic).filter(function (k) { return k !== '_id' && k !== 'wish'; }); };
+        this.getIssue = function (comic, issue) { return _this.comicsMap.get(comic).included.find(function (i) { return i.id === issue; }); };
+        this.getPercentagePages = function (comic, issue) { return Math.round((comic[issue].page / _this._getTotalPages(comic, issue)) * 100); };
+        this.getCalendarIcon = function (comicId) {
+            return _this.comicsMap.get(comicId).attributes.status == 'Completed' ? 'fa-calendar-plus-o' : 'fa-calendar-o';
+        };
+        this.getIssueNumber = function (comicId, issue) {
+            var attr = _this.getIssue(comicId, issue).attributes;
+            return attr.number ? attr.number : attr.title;
+        };
+        this._getTotalPages = function (comic, issue) {
+            var a = _this.getIssue(comic._id, issue).pages;
+            return a ? a.length - 1 : 0.01;
+        };
+    }
+    return HomeItemComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], HomeItemComponent.prototype, "comic", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], HomeItemComponent.prototype, "comicsMap", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], HomeItemComponent.prototype, "toggleButton", void 0);
+HomeItemComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-home-item',
+        template: __webpack_require__("../../../../../src/app/home/home-item/home-item.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/home/home-item/home-item.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], HomeItemComponent);
+
+//# sourceMappingURL=home-item.component.js.map
 
 /***/ }),
 
@@ -836,7 +1081,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"text-center\">Read & Wished</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <span>\n      <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{comic.comic}}\">{{comicsMap[comic.comic].attributes.title}} </button>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"comic.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(comic)\">Wish</button>\n      <div>\n        <i class=\"fa\" [ngClass]=\"getCalendarIcon(comic.comic)\"> </i>\n        <span class=\"small\">{{comicsMap[comic.comic].attributes.publication_date}}</span>\n      </div>\n    </span>\n    <span class=\"badge badge-secondary m-1\" *ngFor=\"let issue of comic.issues | orderBy: issue\">\n      <a routerLink=\"/comic/{{getIssueLink(issuesMap[issue].links.self)}}\" class=\"text-white\">#{{issuesMap[issue].attributes.number === undefined? issuesMap[issue].attributes.title : issuesMap[issue].attributes.number}} </a>\n    </span>\n  </li>\n</ul>\n\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{new.id}}\">\n            <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"> {{new.attributes.title}}\n          </button>\n          <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"new.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(new)\">Wish</button>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{update.id}}\">\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"> {{update.attributes.title}}\n        </button>\n        <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"update.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(update)\">Wish</button>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<h1 class=\"text-center\">My Collection</h1>\n<ul class=\"list-group\">\n  <li class=\"list-group-item\" *ngFor=\"let comic of comicsRead\">\n    <app-home-item [comic]=\"comic\" [comicsMap]=\"issuesMap\" (toggleButton)=\"toggleComicWish($event)\"></app-home-item>\n  </li>\n</ul>\n\n<!-- <div class=\"row\">\n  <div class=\"col-sm-6\">\n      <h1 class=\"text-center\">News</h1>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let new of news.news\">\n          <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{new.id}}\">\n            <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"new.links.cover\" alt=\"cover\"> {{new.attributes.title}}\n          </button>\n          <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"new.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(new)\">Wish</button>\n        </li>\n      </ul>\n  </div>\n\n  <div class=\"col-sm-6\">\n    <h1 class=\"text-center\">Updated</h1>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\" *ngFor=\"let update of news.updated\">\n        <button class=\"btn btn-sm btn-outline-primary\" routerLink=\"/comic/{{update.id}}\">\n          <img class=\"img-fluid\" style=\"max-height: 7em\" [src]=\"update.links.cover\" alt=\"cover\"> {{update.attributes.title}}\n        </button>\n        <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"update.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(update)\">Wish</button>\n      </li>\n    </ul>\n  </div>\n</div> -->\n"
 
 /***/ }),
 
@@ -865,35 +1110,19 @@ var HomeComponent = (function () {
         var _this = this;
         this.route = route;
         this.api = api;
-        this._map = function (acc, comic) {
-            acc[comic.id] = comic;
-            return acc;
-        };
-        this.getIssueLink = function (self) { return self.split('/').splice(self.split('/').length - 2).join('/'); };
-        this.getCalendarIcon = function (comicId) {
-            return _this.comicsMap[comicId].attributes.status == 'Completed' ? 'fa-calendar-plus-o' : 'fa-calendar-o';
+        this.toggleComicWish = function (comic) {
+            var isWish = !comic.wish;
+            _this.api.markComicWish(comic._id, isWish).subscribe(function (res) {
+                if (res.ok)
+                    comic.wish = isWish;
+            });
         };
     }
     HomeComponent.prototype.ngOnInit = function () {
-        _a = this.route.snapshot.data['comics'], this.comicsRead = _a[0], this.news = _a[1], this.fullComics = _a[2];
-        this.issuesMap = this.fullComics
-            .map(function (c) { return c.included; })
-            .reduce(function (a, b) { return a.concat(b); }, [])
-            .filter(function (c) { return c.type === 'issues'; })
-            .reduce(this._map, {});
-        this.comicsMap = this.fullComics
-            .map(function (c) { return c.data; })
-            .reduce(function (a, b) { return a.concat(b); }, [])
-            .reduce(this._map, {});
+        _a = this.route.snapshot.data['comics'], this.comicsRead = _a[0], this.fullComics = _a[1];
+        var a = this.fullComics.map(function (c) { return [c._id, c]; });
+        this.issuesMap = new Map(a);
         var _a;
-    };
-    HomeComponent.prototype.toggleComicWish = function (comic) {
-        var isWish = !comic.wish;
-        this.api.markComicWish(comic.comic || comic.id, isWish).subscribe(function (res) {
-            if (res.ok) {
-                comic.wish = isWish;
-            }
-        });
     };
     return HomeComponent;
 }());
@@ -986,6 +1215,44 @@ ImageViewerComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/interceptor.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interceptor; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Interceptor = (function () {
+    function Interceptor(auth) {
+        this.auth = auth;
+    }
+    Interceptor.prototype.intercept = function (req, next) {
+        var authReq = req.clone({ headers: req.headers.set('Authorization', this.auth.getToken()) });
+        return next.handle(authReq);
+    };
+    return Interceptor;
+}());
+Interceptor = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__auth_service__["a" /* AuthService */]) === "function" && _a || Object])
+], Interceptor);
+
+var _a;
+//# sourceMappingURL=interceptor.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/login/login.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1037,8 +1304,7 @@ var LoginComponent = (function () {
         this.api = api;
         this.router = router;
         this._success = function () { return _this.router.navigate(['comics']); };
-        this._error = function (e) { return alert(e.text()); };
-        this.login = function (user) { return _this.api.login(user).subscribe(_this._success, _this._error); };
+        this.login = function (user) { return _this.api.login(user).subscribe(_this._success, alert); };
     }
     return LoginComponent;
 }());
@@ -1110,7 +1376,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control-label\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item d-flex justify-content-between\">\n      <img style=\"width:4em\" class=\"img-fluid\" [src]=\"item.links.cover\" alt=\"cover\">\n      <a routerLink=\"/comic/{{item.id}}\">{{item.attributes.title}}</a>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"item.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(item)\">Wish</button>\n      <div>\n        <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n        <small>{{item.attributes.summary}}</small>\n      </div>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control-label\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item d-flex justify-content-between\">\n      <img style=\"width:4em; max-height: 6em\" class=\"img-fluid\" [src]=\"item.cover\" alt=\"cover\">\n      <a [routerLink]=\"['/comic', item._id]\">{{item.attributes.title}}</a>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"item.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(item)\">Wish</button>\n      <div>\n        <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n        <small>{{item.attributes.summary}}</small>\n      </div>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
