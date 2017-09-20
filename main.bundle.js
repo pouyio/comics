@@ -1423,7 +1423,7 @@ var SearchComponent = (function () {
     }
     SearchComponent.prototype.toggleComicWish = function (comic) {
         var isWish = !comic.wish;
-        this.api.markComicWish(comic.id, isWish).subscribe(function (res) {
+        this.api.markComicWish(comic._id, isWish).subscribe(function (res) {
             if (res.ok)
                 comic.wish = isWish;
         });
