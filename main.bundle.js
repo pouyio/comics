@@ -1372,7 +1372,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control-label\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item d-flex justify-content-between\">\n      <img style=\"width:4em; max-height: 6em\" class=\"img-fluid\" [src]=\"item.cover\" alt=\"cover\">\n      <a [routerLink]=\"['/comic', item._id]\">{{item.attributes.title}}</a>\n      <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"item.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(item)\">Wish</button>\n      <div>\n        <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n        <small>{{item.attributes.summary}}</small>\n      </div>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"form-group\">\n  <div [class.has-danger]=\"searchForm.value && searchForm.value.length <= 3\" class=\"input-group\">\n    <span class=\"input-group-btn\">\n      <button class=\"btn btn-sm btn-secondary\" type=\"button\" (click)=\"searchForm.reset()\">Cancel</button>\n    </span>\n    <input [formControl]=\"searchForm\" type=\"text\" class=\"form-control-label\" (keyup.escape)=\"searchForm.reset()\" placeholder=\"Search comic\">\n  </div>\n  <ul class=\"list-group d-flex flex-row flex-wrap\" style=\"position:absolute; z-index:2; overflow-y: overlay; max-height: 90vh\">\n    <li *ngFor=\"let item of listed | async\" class=\"list-group-item \">\n      <a [routerLink]=\"['/comic', item._id]\">{{item.attributes.title}}</a>\n      <span class=\"d-flex justify-content-between\">\n        <img style=\"width:4em; max-height: 6em\" class=\"img-fluid\" [src]=\"item.cover\" alt=\"cover\">\n        <button type=\"button\" class=\"btn btn-sm\" [ngClass]=\"item.wish? 'btn-dark': 'btn-outline-dark'\" (click)=\"toggleComicWish(item)\">Wish</button>\n        <div>\n          <span>{{item.attributes.completed ? 'Complete': 'Ongoing'}}</span>\n          <small>{{limit(item.attributes.summary, 100)}}</small>\n        </div>\n      </span>\n    </li>\n    <li *ngIf=\"loading\" class=\"list-group-item d-flex justify-content-between\">\n      Loading ...\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -1422,6 +1422,11 @@ var SearchComponent = (function () {
             if (res.ok)
                 comic.wish = isWish;
         });
+    };
+    SearchComponent.prototype.limit = function (text, limit) {
+        if (text === void 0) { text = ''; }
+        if (limit === void 0) { limit = 3; }
+        return text.length > (limit - 3) ? text.substring(0, limit - 3).concat('...') : text;
     };
     return SearchComponent;
 }());
