@@ -483,7 +483,7 @@ var BaseService = (function () {
         this.auth = auth;
         this.resolver = resolver;
         // protected baseUrl: string = 'http://192.168.1.33:8080';
-        this.baseUrl = 'https://comic.vicenteortiz.me/comic';
+        this.baseUrl = 'https://comic.vicenteortiz.me/comic-api';
     }
     BaseService.prototype.handleError = function (error) {
         // In a real world app, you might use a remote logging infrastructure
