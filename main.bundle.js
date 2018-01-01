@@ -462,6 +462,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_environments_environment_prod__ = __webpack_require__("../../../../../src/environments/environment.prod.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -477,13 +478,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var BaseService = (function () {
     function BaseService(http, auth, resolver) {
         this.http = http;
         this.auth = auth;
         this.resolver = resolver;
-        // protected baseUrl: string = 'http://192.168.1.33:8080';
-        this.baseUrl = 'https://comic.vicenteortiz.me:8081';
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_6_environments_environment_prod__["a" /* environment */].api_url;
     }
     BaseService.prototype.handleError = function (error) {
         // In a real world app, you might use a remote logging infrastructure
@@ -1444,18 +1445,27 @@ var _a, _b;
 
 /***/ }),
 
+/***/ "../../../../../src/environments/environment.prod.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+var environment = {
+    production: true,
+    api_url: 'https://comic.vicenteortiz.me:8081'
+};
+//# sourceMappingURL=environment.prod.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/environments/environment.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-// The file contents for the current environment will overwrite these during build.
 var environment = {
-    production: false
+    production: true,
+    api_url: 'https://comic.vicenteortiz.me:8081'
 };
 //# sourceMappingURL=environment.js.map
 
