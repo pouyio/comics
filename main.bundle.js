@@ -462,7 +462,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resolve_service__ = __webpack_require__("../../../../../src/app/resolve.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_environments_environment_prod__ = __webpack_require__("../../../../../src/environments/environment.prod.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -484,7 +484,7 @@ var BaseService = (function () {
         this.http = http;
         this.auth = auth;
         this.resolver = resolver;
-        this.baseUrl = __WEBPACK_IMPORTED_MODULE_6_environments_environment_prod__["a" /* environment */].api_url;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].api_url;
     }
     BaseService.prototype.handleError = function (error) {
         // In a real world app, you might use a remote logging infrastructure
@@ -1159,7 +1159,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/image-viewer/image-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<img [class.full-screen]=\"fullScreen\" class=\"img-fluid\" [src]=\"img\" alt=\"comic image\" (click)=\"toggleFullScreen()\">\n\n<div [hidden]=\"!fullScreen\">\n  <button class=\"button-hover button-prev\" (click)=\"swipe(-1)\"></button>\n  <button class=\"button-hover button-next\" (click)=\"swipe(1)\"></button>\n</div>\n"
+module.exports = "<img [class.full-screen]=\"fullScreen\" class=\"img-fluid\" [src]=\"img\" alt=\"comic image\" (click)=\"toggleFullScreen()\" (load)=\"onLoaded()\">\n\n<div [hidden]=\"!fullScreen\">\n  <button class=\"button-hover button-prev\" (click)=\"swipe(-1)\"></button>\n  <button class=\"button-hover button-next\" (click)=\"swipe(1)\"></button>\n</div>\n"
 
 /***/ }),
 
@@ -1189,6 +1189,9 @@ var ImageViewerComponent = (function () {
     };
     ImageViewerComponent.prototype.swipe = function (e) {
         this.onSwiped.emit(e);
+    };
+    ImageViewerComponent.prototype.onLoaded = function () {
+        window.scroll({ top: 0, behavior: 'smooth' });
     };
     return ImageViewerComponent;
 }());
@@ -1442,19 +1445,6 @@ SearchComponent = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=search.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/environments/environment.prod.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-var environment = {
-    production: true,
-    api_url: 'https://comic.vicenteortiz.me:8081'
-};
-//# sourceMappingURL=environment.prod.js.map
 
 /***/ }),
 
