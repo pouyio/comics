@@ -573,7 +573,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic-issue/comic-issue.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-issue-presentation [issue]=\"issue\" (pageRead)=\"updatePage($event)\"><app-issue-presentation>\n"
+module.exports = "<app-issue-presentation [issue]=\"issue\" (onGoIssue)=\"onGoIssue()\" (pageRead)=\"updatePage($event)\"><app-issue-presentation>\n"
 
 /***/ }),
 
@@ -598,16 +598,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ComicIssueComponent = (function () {
-    function ComicIssueComponent(api, route) {
+    function ComicIssueComponent(api, route, router) {
         var _this = this;
         this.api = api;
         this.route = route;
+        this.router = router;
         this.updatePage = function (page) {
             _this.api.updateIssue(_this.route.snapshot.params.id, _this.route.snapshot.params.issue, { page: page }).subscribe(null);
         };
     }
     ComicIssueComponent.prototype.ngOnInit = function () {
         this.issue = this.route.snapshot.data['issue'];
+    };
+    ComicIssueComponent.prototype.onGoIssue = function () {
+        this.router.navigate(['/comic/', this.route.snapshot.params.id]);
     };
     return ComicIssueComponent;
 }());
@@ -617,10 +621,10 @@ ComicIssueComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.html"),
         styles: [__webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], ComicIssueComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=comic-issue.component.js.map
 
 /***/ }),
@@ -646,7 +650,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"issue\">\n\n<div class=\"m-auto\" style=\"width:60%\">\n  <app-image-viewer (onSwiped)=\"onPageChange($event)\" [img]=\"issue.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-6\">\n    <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" [max]=\"issue.pages.length - 1\" [(ngModel)]=\"page\" (change)=\"onChange(page)\">\n  </div>\n\n  <div class=\"btn-group col-6\">\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(-1)\" [disabled]=\"page === 0\">prev</button>\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(+1)\" [disabled]=\"page === lastPage\">next</button>\n  </div>\n</div>\n\n\n</div>\n"
+module.exports = "<div *ngIf=\"issue\">\n\n  <div class=\"m-auto\" style=\"width:60%\">\n    <app-image-viewer (onSwiped)=\"onPageChange($event)\" (toIssue)=\"onGoIssue.emit()\" [img]=\"issue.pages[page]\"></app-image-viewer>\n  </div>\n\n  <div class=\"container\">\n\n    <div class=\"row\">\n      <div class=\"col-6\">\n        <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" [max]=\"issue.pages.length - 1\" [(ngModel)]=\"page\" (change)=\"onChange(page)\">\n      </div>\n\n      <div class=\"col-6\">\n        <div class=\"btn-group\">\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(-1)\" [disabled]=\"page === 0\">prev</button>\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(+1)\" [disabled]=\"page === lastPage\">next</button>\n        </div>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onGoIssue.emit()\">to Issue</button>\n      </div>\n    </div>\n  </div>\n\n\n</div>"
 
 /***/ }),
 
@@ -670,6 +674,7 @@ var IssuePresentationComponent = (function () {
     function IssuePresentationComponent() {
         var _this = this;
         this.pageRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onGoIssue = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.page = 0;
         this.lastPage = 0;
         this.setPage = function (page) {
@@ -698,6 +703,10 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
     __metadata("design:type", Object)
 ], IssuePresentationComponent.prototype, "pageRead", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], IssuePresentationComponent.prototype, "onGoIssue", void 0);
 IssuePresentationComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-issue-presentation',
