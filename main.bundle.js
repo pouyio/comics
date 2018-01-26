@@ -1305,7 +1305,7 @@ var templateObject_1, templateObject_2;
 var environment = {
     production: true,
     api_url: 'https://comic.vicenteortiz.me:8084/graphql',
-    rest_url: 'https://comic.vicenteortiz.me:8081'
+    rest_url: 'https://comic.vicenteortiz.me:8084'
 };
 
 
