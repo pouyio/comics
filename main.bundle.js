@@ -1304,7 +1304,7 @@ var templateObject_1, templateObject_2;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
 var environment = {
     production: true,
-    api_url: 'http://comic.vicenteortiz.me:8084/graphql',
+    api_url: 'https://comic.vicenteortiz.me:8084/graphql',
     rest_url: 'https://comic.vicenteortiz.me:8081'
 };
 
