@@ -105,7 +105,7 @@ var ApiService = /** @class */ (function (_super) {
         return this.http.post(this.baseUrl + "/encode", { url: url }).catch(this.handleError);
     };
     ApiService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
     ], ApiService);
     return ApiService;
 }(__WEBPACK_IMPORTED_MODULE_2__base_service__["a" /* BaseService */]));
@@ -122,7 +122,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".navbar a {\n  font-size: .91em;\n}\n", ""]);
+exports.push([module.i, ".navbar a {\n  font-size: .91em;\n}\n\n.spread-nav-menu {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: baseline;\n      -ms-flex-align: baseline;\n          align-items: baseline;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n", ""]);
 
 // exports
 
@@ -135,7 +135,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"logged\" style=\"position: fixed; width: 100%; z-index: 1\" class=\"navbar is-dark\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚 Home</a>\n\n    <div class=\"navbar-burger burger\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive}\" class=\"navbar-menu\">\n      <div class=\"navbar-start\">\n      <div class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\"><a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a></li>\n          </ul>\n        </nav>\n      </div>\n      </div>\n      <div class=\"navbar-end\">\n      <div class=\"navbar-item\">\n        <pou-search></pou-search>\n      </div>\n      <a class=\"navbar-item\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<nav *ngIf=\"logged\" class=\"navbar\">\n</nav>\n\n<router-outlet></router-outlet>\n"
+module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚 Home</a>\n\n    <div class=\"navbar-item\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <div class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -205,7 +205,7 @@ var AppComponent = /** @class */ (function () {
         this.cdRef.detectChanges();
     };
     AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-root',
             template: __webpack_require__("../../../../../src/app/app.component.html"),
             styles: [__webpack_require__("../../../../../src/app/app.component.css")]
@@ -215,7 +215,7 @@ var AppComponent = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_1__api_service__["a" /* ApiService */],
             __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_3__resolve_service__["a" /* ResolveService */],
-            __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"]])
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -234,8 +234,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__ = __webpack_require__("../../../../ngx-order-pipe/dist/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__ = __webpack_require__("../../../../ngx-order-pipe/ngx-order-pipe.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__interceptor__ = __webpack_require__("../../../../../src/app/interceptor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api_service__ = __webpack_require__("../../../../../src/app/api.service.ts");
@@ -299,7 +298,7 @@ var AppModule = /** @class */ (function () {
         });
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_12__comic_comic_component__["a" /* ComicComponent */],
@@ -319,7 +318,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["c" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_22_apollo_angular__["b" /* ApolloModule */],
                 __WEBPACK_IMPORTED_MODULE_23_apollo_angular_link_http__["b" /* HttpLinkModule */],
-                __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__["OrderModule"],
+                __WEBPACK_IMPORTED_MODULE_5_ngx_order_pipe__["a" /* OrderModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_18__app_routes__["a" /* AppRoutes */]),
             ],
             providers: [
@@ -412,7 +411,7 @@ var AuthGuard = /** @class */ (function () {
         };
     }
     AuthGuard = __decorate([
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */])), __param(1, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */])),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["z" /* Inject */])(__WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */])), __param(1, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["z" /* Inject */])(__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]])
     ], AuthGuard);
     return AuthGuard;
@@ -461,7 +460,7 @@ var AuthService = /** @class */ (function () {
         this.token = localStorage.getItem('token');
     }
     AuthService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
     ], AuthService);
     return AuthService;
@@ -521,7 +520,7 @@ var BaseService = /** @class */ (function () {
         return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["a" /* Observable */].throw(errMsg);
     };
     BaseService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["b" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_4__auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_5__resolve_service__["a" /* ResolveService */]])
     ], BaseService);
     return BaseService;
@@ -593,7 +592,7 @@ var ComicIssueComponent = /** @class */ (function () {
         this.issue$ = this.route.params.switchMap(this.getIssue);
     };
     ComicIssueComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-comic-issue',
             template: __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.html")
         }),
@@ -633,7 +632,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var IssuePresentationComponent = /** @class */ (function () {
     function IssuePresentationComponent() {
         var _this = this;
-        this.pageRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.pageRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.page = 0;
         this.lastPage = 0;
         this.setPage = function (page) {
@@ -651,15 +650,15 @@ var IssuePresentationComponent = /** @class */ (function () {
         this.lastPage = this.issue.pages.length - 1;
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", Object)
     ], IssuePresentationComponent.prototype, "issue", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], IssuePresentationComponent.prototype, "pageRead", void 0);
     IssuePresentationComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-issue-presentation',
             template: __webpack_require__("../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.html")
         })
@@ -692,7 +691,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic/comic-presentation/comic-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between\">\n        <div class=\"is-inline\" (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">✈️ {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n    <div class=\"content\">\n\n      <span>\n        📅 {{comic.publication_date}}\n      </span>\n\n      <p class=\"col-12\">{{comic.summary}}</p>\n\n      <div class=\"col-sm-4 col-6\">\n        <img class=\"img-fluid\" [src]=\"comic.cover\" alt=\"cover\">\n      </div>\n\n      <div class=\"col-sm-4 col-6\">\n        <h2 class=\"text-center\">Info</h2>\n        <ul class=\"list-group\">\n          <li class=\"list-group-item\">\n            <strong>Artist</strong>:\n            <span *ngFor=\"let artist of comic.artists\">\n              {{artist.first_name}} {{artist.last_name}}\n            </span>\n          </li>\n          <li class=\"list-group-item\">\n            <strong>Publisher</strong>:\n            <span *ngFor=\"let publisher of comic.publishers\">\n              {{publisher.name}}\n            </span>\n          </li>\n          <li class=\"list-group-item\">\n            <strong>Writer</strong>\n            <span *ngFor=\"let writer of comic.writers\">\n              {{writer.first_name}} {{writer.last_name}}\n            </span>\n          </li>\n        </ul>\n      </div>\n\n      <div class=\"col-sm-4\">\n        <div class=\"row\">\n          <div class=\"col-6 col-sm-12\">\n            <h2 class=\"text-center\">Genres</h2>\n            <ul class=\"list-group\">\n              <li class=\"list-group-item\">\n                <span class=\"badge badge-secondary m-1\" *ngFor=\"let genre of comic.genres\">\n                  {{genre.name}}\n                </span>\n              </li>\n            </ul>\n          </div>\n          <div class=\"col-6 col-sm-12\">\n            <h2 class=\"text-center\">Publication</h2>\n            <ul class=\"list-group\">\n              <li class=\"list-group-item\">\n                {{comic.publication_date}}\n              </li>\n            </ul>\n          </div>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n</section>\n\n<section class=\"section\">\n  <div class=\"container-fluid\">\n    <div class=\"\">\n      <div class=\"content\">\n        <h2 class=\"\">Issues</h2>\n        <ul class=\"\">\n          <li *ngFor=\"let issue of orderedIssues\">\n\n            <a [routerLink]=\"['/comic', comic._id, issue.id]\">{{issue.title}} {{issue.percentage}}%</a>\n            <button class=\"button is-small\" type=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n              Read {{issue.read ? '✅' : '❌'}}\n            </button>\n          </li>\n        </ul>\n\n      </div>\n    </div>\n  </div>\n</section>"
+module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between\">\n        <div class=\"is-inline\" (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">✈️ {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical\">\n\n                <article class=\"tile is-child notification is-danger\">\n                  <p class=\"title\"> Genres </p>\n                  <p class=\"subtitle\">\n                    {{ joinComma(comic.genres) }}\n                  </p>\n                </article>\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title\">Info</p>\n                  <ul class=\"subtitle\">\n                    <li>\n                      <strong>Artist</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publisher</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writer</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img class=\"img-fluid\" [src]=\"comic.cover\" alt=\"cover\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-success\">\n                <p class=\"title\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"subtitle has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-info\">\n            <p class=\"title\">Issues</p>\n            <ul style=\"overflow-y: auto; max-height: 100vh;\">\n              <li *ngFor=\"let issue of orderedIssues\">\n\n                <a [routerLink]=\"['/comic', comic._id, issue.id]\">{{getPercentageIcon(issue.percentage)}} {{issue.title}}</a>\n                <button class=\"button is-small\" type=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                  {{issue.read ? '✅' : '❌'}}\n                </button>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
 
 /***/ }),
 
@@ -714,8 +713,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ComicPresentationComponent = /** @class */ (function () {
     function ComicPresentationComponent() {
-        this.toggleWish = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
-        this.markIssueRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.toggleWish = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.markIssueRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.joinComma = function (list) { return list.map(function (g) { return g.name; }).join(', '); };
+        this.getPercentageIcon = function (percentage) {
+            return percentage < 20 ?
+                '🌑' : percentage < 40 ?
+                '🌘' : percentage < 60 ?
+                '🌗' : percentage < 80 ?
+                '🌖' : percentage < 100 ?
+                '🌕' : '🌑';
+        };
     }
     ComicPresentationComponent.prototype.ngOnChanges = function (changes) {
         this.orderedIssues = this._sortIssues(changes.comic.currentValue.issues.slice());
@@ -726,24 +734,23 @@ var ComicPresentationComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", Object)
     ], ComicPresentationComponent.prototype, "comic", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], ComicPresentationComponent.prototype, "toggleWish", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], ComicPresentationComponent.prototype, "markIssueRead", void 0);
     ComicPresentationComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-comic-presentation',
             template: __webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.html"),
             styles: [__webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
+        })
     ], ComicPresentationComponent);
     return ComicPresentationComponent;
 }());
@@ -829,7 +836,7 @@ var ComicComponent = /** @class */ (function () {
         });
     }
     ComicComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-comic',
             template: __webpack_require__("../../../../../src/app/comic/comic.component.html")
         }),
@@ -886,18 +893,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var HomeItemComponent = /** @class */ (function () {
     function HomeItemComponent() {
-        this.toggleButton = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.toggleButton = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", Object)
     ], HomeItemComponent.prototype, "comic", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], HomeItemComponent.prototype, "toggleButton", void 0);
     HomeItemComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-home-item',
             template: __webpack_require__("../../../../../src/app/home/home-item/home-item.component.html"),
             styles: [__webpack_require__("../../../../../src/app/home/home-item/home-item.component.css")]
@@ -971,7 +978,7 @@ var HomeComponent = /** @class */ (function () {
         this.$comics = this.apollo.watchQuery({ query: this.comicsQuery }).valueChanges.share();
     };
     HomeComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-home',
             template: __webpack_require__("../../../../../src/app/home/home.component.html")
         }),
@@ -1028,7 +1035,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ImageViewerComponent = /** @class */ (function () {
     function ImageViewerComponent() {
-        this.onSwiped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onSwiped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.fullScreen = false;
     }
     ImageViewerComponent.prototype.toggleFullScreen = function () {
@@ -1041,15 +1048,15 @@ var ImageViewerComponent = /** @class */ (function () {
         window.scroll({ top: 0, behavior: 'smooth' });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", String)
     ], ImageViewerComponent.prototype, "img", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], ImageViewerComponent.prototype, "onSwiped", void 0);
     ImageViewerComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-image-viewer',
             template: __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.html"),
             styles: [__webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.css")]
@@ -1090,7 +1097,7 @@ var Interceptor = /** @class */ (function () {
         return next.handle(authReq);
     };
     Interceptor = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__auth_service__["a" /* AuthService */]])
     ], Interceptor);
     return Interceptor;
@@ -1136,8 +1143,8 @@ var LoginComponent = /** @class */ (function () {
         this.login = function (user) { return _this.api.login(user).subscribe(_this._success, alert); };
     }
     LoginComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-login',
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'pou-login',
             template: __webpack_require__("../../../../../src/app/login/login.component.html")
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__api_service__["a" /* ApiService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
@@ -1172,7 +1179,7 @@ var ResolveService = /** @class */ (function () {
         this.getState = function () { return _this.subject.asObservable(); };
     }
     ResolveService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
     ], ResolveService);
     return ResolveService;
 }());
@@ -1282,7 +1289,7 @@ var SearchComponent = /** @class */ (function () {
         return text.length > (limit - 3) ? text.substring(0, limit - 3).concat('...') : text;
     };
     SearchComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-search',
             template: __webpack_require__("../../../../../src/app/search/search.component.html"),
             styles: [__webpack_require__("../../../../../src/app/search/search.component.scss")]
@@ -1325,7 +1332,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 
