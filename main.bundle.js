@@ -681,7 +681,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "progress {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 5%;\n  color: #0063a6;\n  -webkit-appearance: none;\n}\n\nprogress::-webkit-progress-bar {\n  background-color: hsla(0, 0%, 100%, 0);\n}\n\nprogress::-webkit-progress-value {\n  background-color: hsla(120, 75%, 40%, 0.77);\n}\n", ""]);
+exports.push([module.i, ".zoomable {\n  position: relative;\n  -webkit-transition: all .2s ease-in-out;\n  transition: all .2s ease-in-out;\n}\n\n.zoomIn {\n  -webkit-transform: scale(3.5);\n          transform: scale(3.5);\n  z-index: 200;\n}\n\n.no-overflow {\n  overflow-y: auto;\n  max-height: 63vh;\n}\n", ""]);
 
 // exports
 
@@ -694,7 +694,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/comic/comic-presentation/comic-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">✈️ {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-danger\">\n                  <p class=\"title is-marginless\"> Genres </p>\n                  <p>\n                    {{ joinComma(comic.genres) }}\n                  </p>\n                </article>\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artist</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publisher</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writer</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img class=\"img-fluid\" [src]=\"comic.cover\" alt=\"cover\" style=\"border-radius: 3px\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: 1em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <ul style=\"overflow-y: auto; max-height: 100vh;\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n\n                <a [routerLink]=\"['/comic', comic._id, issue.id]\">{{getPercentageIcon(issue.percentage)}} {{issue.title}}</a>\n                <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                  <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                  <label for=\"switchRounded\"></label>\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
+module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">✈️ {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n  <div class=\"hero-foot is-hidden-tablet\">\n    <nav class=\"tabs is-boxed is-fullwidth\">\n      <div class=\"container\">\n        <ul>\n          <li [ngClass]=\"{'is-active': selectedTab === 'general'}\" (click)=\"selectedTab = 'general'\">\n            <a>General</a>\n          </li>\n          <li [ngClass]=\"{'is-active': selectedTab === 'issues'}\" (click)=\"selectedTab = 'issues'\">\n            <a>Issues</a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\" *ngIf=\"isVisible('general')\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-danger\">\n                  <p class=\"title is-marginless\"> Genres </p>\n                  <p>\n                    {{ joinComma(comic.genres) }}\n                  </p>\n                </article>\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artist</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publisher</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writer</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img (click)=\"toggleZoomIn()\" [ngClass]=\"{'zoomIn': zoomed}\" class=\"img-fluid zoomable\" [src]=\"comic.cover\" alt=\"cover\" style=\"border-radius: 3px\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\" *ngIf=\"isVisible('issues')\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: 1em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <ul [ngClass]=\"{'no-overflow': currentWidth > mobileWidth}\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n\n                <a [routerLink]=\"['/comic', comic._id, issue.id]\">{{getPercentageIcon(issue.percentage)}} {{issue.title}}</a>\n                <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                  <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                  <label for=\"switchRounded\"></label>\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
 
 /***/ }),
 
@@ -704,6 +704,7 @@ module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComicPresentationComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -714,10 +715,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ComicPresentationComponent = /** @class */ (function () {
     function ComicPresentationComponent() {
+        var _this = this;
         this.toggleWish = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.markIssueRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.selectedTab = 'general';
+        this.zoomed = false;
+        this.currentWidth = window.innerWidth;
+        this.mobileWidth = 600;
         this.joinComma = function (list) { return list.map(function (g) { return g.name; }).join(', '); };
         this.getPercentageIcon = function (percentage) {
             return percentage < 20 ?
@@ -727,6 +734,24 @@ var ComicPresentationComponent = /** @class */ (function () {
                 '🌖' : percentage < 100 ?
                 '🌕' : '🌑';
         };
+        this.toggleZoomIn = function () {
+            if (_this.currentWidth > _this.mobileWidth) {
+                _this.zoomed = !_this.zoomed;
+            }
+        };
+        this.isVisible = function (tab) {
+            if (_this.currentWidth > _this.mobileWidth)
+                return true;
+            if (tab === _this.selectedTab)
+                return true;
+        };
+        __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */]
+            .fromEvent(window, 'resize')
+            .map(function () { return window.innerWidth; })
+            .subscribe(function (w) {
+            _this.currentWidth = w;
+            _this.zoomed = false;
+        });
     }
     ComicPresentationComponent.prototype.ngOnChanges = function (changes) {
         this.orderedIssues = this._sortIssues(changes.comic.currentValue.issues.slice());
@@ -753,7 +778,8 @@ var ComicPresentationComponent = /** @class */ (function () {
             selector: 'pou-comic-presentation',
             template: __webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.html"),
             styles: [__webpack_require__("../../../../../src/app/comic/comic-presentation/comic-presentation.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [])
     ], ComicPresentationComponent);
     return ComicPresentationComponent;
 }());
