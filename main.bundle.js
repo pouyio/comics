@@ -1316,7 +1316,7 @@ var SearchItemComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field has-addons is-marginless\">\n  <div class=\"control\">\n    <input [formControl]=\"searchForm\" (keyup.escape)=\"searchForm.reset()\" [class.is-danger]=\"searchForm.value && searchForm.value.length <= 3\"\n      class=\"input is-small\" type=\"text\" placeholder=\"Search\">\n  </div>\n  <div class=\"control\">\n    <a [class.is-loading]=\"isLoading\" class=\"button is-small is-light is-outlined\" (click)=\"searchForm.reset()\">\n      <span class=\"is-hidden-mobile\"> Cancel &nbsp;</span> ❌\n    </a>\n  </div>\n</div>\n\n<ul *ngIf=\"listed | async; let comics\" class=\"container custom-container\">\n  <li *ngFor=\"let comic of comics\">\n    <pou-search-item [comic]=\"comic\" (goTo)=\"onGoTo($event)\"></pou-search-item>\n  </li>\n</ul>"
+module.exports = "<div class=\"field has-addons is-marginless\">\n  <div class=\"control\">\n    <input [formControl]=\"searchForm\" (keyup.escape)=\"searchForm.reset()\" [class.is-danger]=\"searchForm.value && searchForm.value.length <= 3\"\n      class=\"input is-small\" type=\"text\" placeholder=\"Search\">\n  </div>\n  <div class=\"control\">\n    <a [class.is-loading]=\"isLoading\" class=\"button is-small is-light is-outlined\" (click)=\"searchForm.reset()\">\n      <span class=\"is-hidden-mobile\"> Cancel &nbsp;</span> ❌\n    </a>\n  </div>\n</div>\n\n<ul *ngIf=\"listed | async; let comics\" class=\"container custom-container\">\n  <li *ngFor=\"let comic of comics\">\n    <pou-search-item [comic]=\"comic\" (goTo)=\"onGoTo($event)\" (onToggleWish)=\"toggleWish($event)\"></pou-search-item>\n  </li>\n</ul>"
 
 /***/ }),
 
@@ -1377,7 +1377,7 @@ var SearchComponent = /** @class */ (function () {
         this.searchForm = new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormControl */]();
         this.isLoading = false;
         this.searchQuery = __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  query searchComics($search: String!) {\n    comics(search: $search){\n      _id\n      title\n      cover\n      wish\n      publication_date\n      status\n      summary\n    }\n  }\n  "], ["\n  query searchComics($search: String!) {\n    comics(search: $search){\n      _id\n      title\n      cover\n      wish\n      publication_date\n      status\n      summary\n    }\n  }\n  "])));
-        this.markComicWish = __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wish\n    }\n  }\n  "], ["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wish\n    }\n  }\n  "])));
+        this.markComicWish = __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wishs\n    }\n  }\n  "], ["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wishs\n    }\n  }\n  "])));
         this.search$ = function (search) {
             return search ? _this.apollo.watchQuery({
                 query: _this.searchQuery, variables: { search: search }
