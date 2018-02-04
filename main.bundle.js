@@ -135,7 +135,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚 <span class=\"is-hidden-mobile\"> Home </span></a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <div class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
+module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚 <span class=\"is-hidden-mobile\"> Home </span></a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <a class=\"navbar-item has-text-white\" [routerLink]=\"['/search']\"> 🔍 Advanced</a>\n      <div *ngIf=\"getBreadcrumbs(breadcrumbs).length\" class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -536,7 +536,7 @@ var BaseService = /** @class */ (function () {
 /***/ "../../../../../src/app/comic-issue/comic-issue.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"issue$ | async; let issue\">\n    <pou-issue-presentation [issue]=\"issue\" (pageRead)=\"updatePage($event)\">\n    </pou-issue-presentation>\n</div>\n"
+module.exports = "<div *ngIf=\"issue$ | async; let issue\">\n    <pou-issue-presentation [issue]=\"issue\" (pageRead)=\"updatePage($event)\" (onGoComic)=\"goComic()\">\n    </pou-issue-presentation>\n</div>\n"
 
 /***/ }),
 
@@ -568,11 +568,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ComicIssueComponent = /** @class */ (function () {
-    function ComicIssueComponent(route, apollo) {
+    function ComicIssueComponent(route, router, apollo) {
         var _this = this;
         this.route = route;
+        this.router = router;
         this.apollo = apollo;
-        this.updateQuery = __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  mutation ($comic: String!, $issue: String!, $page: Int!) {\n    updateIssue(_id: $comic, issue: $issue, page: $page) {\n      issues(id: $issue) {\n        id\n        __typename\n        page\n      } \n    }\n  }\n  "], ["\n  mutation ($comic: String!, $issue: String!, $page: Int!) {\n    updateIssue(_id: $comic, issue: $issue, page: $page) {\n      issues(id: $issue) {\n        id\n        __typename\n        page\n      } \n    }\n  }\n  "])));
+        this.updateQuery = __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  mutation ($comic: String!, $issue: String!, $page: Int!) {\n    updateIssue(_id: $comic, issue: $issue, page: $page) {\n      _id\n      __typename\n      issues(id: $issue) {\n        id\n        __typename\n        page\n        percentage\n      } \n    }\n  }\n  "], ["\n  mutation ($comic: String!, $issue: String!, $page: Int!) {\n    updateIssue(_id: $comic, issue: $issue, page: $page) {\n      _id\n      __typename\n      issues(id: $issue) {\n        id\n        __typename\n        page\n        percentage\n      } \n    }\n  }\n  "])));
         this.getIssue = function (params) { return _this.apollo.watchQuery({
             query: __WEBPACK_IMPORTED_MODULE_3_graphql_tag___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    query IssueDetail($comic: String!, $issue: String!) { \n      comic(_id: $comic) {\n        _id\n        __typename\n        issues(id: $issue) {\n          __typename\n          id\n          page\n          pages\n        }\n      }\n    }\n    "], ["\n    query IssueDetail($comic: String!, $issue: String!) { \n      comic(_id: $comic) {\n        _id\n        __typename\n        issues(id: $issue) {\n          __typename\n          id\n          page\n          pages\n        }\n      }\n    }\n    "]))),
             variables: {
@@ -590,16 +591,21 @@ var ComicIssueComponent = /** @class */ (function () {
                 }
             }).subscribe();
         };
+        this.goComic = function () { return _this.router.navigate(['/comic', _this.id]); };
     }
     ComicIssueComponent.prototype.ngOnInit = function () {
-        this.issue$ = this.route.params.switchMap(this.getIssue);
+        var _this = this;
+        this.issue$ = this.route.params.do(function (_a) {
+            var id = _a.id;
+            return _this.id = id;
+        }).switchMap(this.getIssue);
     };
     ComicIssueComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-comic-issue',
             template: __webpack_require__("../../../../../src/app/comic-issue/comic-issue.component.html")
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2_apollo_angular__["a" /* Apollo */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_2_apollo_angular__["a" /* Apollo */]])
     ], ComicIssueComponent);
     return ComicIssueComponent;
 }());
@@ -612,7 +618,7 @@ var templateObject_1, templateObject_2;
 /***/ "../../../../../src/app/comic-issue/issue-presentation/issue-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"m-auto\" style=\"width:60%\">\n  <app-image-viewer (onSwiped)=\"onPageChange($event)\" [img]=\"issue.pages[page]\"></app-image-viewer>\n</div>\n\n<div class=\"row\">\n   <div class=\"container\">\n\n    <div class=\"row\">\n      <div class=\"col-6\">\n        <input style=\"width:100%\" type=\"range\" name=\"pages\" min=\"0\" [max]=\"issue.pages.length - 1\" [(ngModel)]=\"page\" (change)=\"onChange(page)\">\n      </div>\n\n      <div class=\"col-6\">\n        <div class=\"btn-group\">\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(-1)\" [disabled]=\"page === 0\">prev</button>\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onPageChange(+1)\" [disabled]=\"page === lastPage\">next</button>\n        </div>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onGoIssue.emit()\">to Issue</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"columns is-centered is-mobile level\" style=\"height: 75vh;\">\n  <div class=\"column is-2-tablet is-3-mobile is-narrow\">\n    <pou-image-viewer *ngIf=\"page - 1 >= 0\" (onToggle)=\"onPageChange(-1)\" (onSwiped)=\"onPageChange($event)\"\n      [img]=\"issue.pages[page - 1]\">\n    </pou-image-viewer>\n  </div>\n  <div class=\"column is-5-tablet is-6-mobile is-narrow\">\n    <pou-image-viewer (onToggle)=\"onFullscreen()\" [fullscreen]=\"isFullscreen\" (onSwiped)=\"onPageChange($event)\"\n      [img]=\"issue.pages[page]\">\n    </pou-image-viewer>\n  </div>\n  <div class=\"column is-2-tablet is-3-mobile is-narrow\">\n    <pou-image-viewer *ngIf=\"page + 1 <= issue.pages.length - 1\" (onToggle)=\"onPageChange(1)\" (onSwiped)=\"onPageChange($event)\"\n      [img]=\"issue.pages[page + 1]\">\n    </pou-image-viewer>\n  </div>\n</div>\n\n<div class=\"columns is-centered has-text-centered\">\n  <div class=\"column is-two-thirds is-narrow\">\n    <input class=\"slider is-fullwidth is-info is-small is-circle\" step=\"1\" min=\"0\" [max]=\"issue.pages.length - 1\" [(ngModel)]=\"page\"\n      (change)=\"onChange(page)\" type=\"range\">\n  </div>\n</div>\n\n<div class=\"columns is-centered has-text-centered\">\n  <div class=\"column is-half is-narrow\">\n    <button type=\"button\" class=\"button is-dark\" (click)=\"onGoComic.emit()\">Comic ↩️</button>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -636,17 +642,19 @@ var IssuePresentationComponent = /** @class */ (function () {
     function IssuePresentationComponent() {
         var _this = this;
         this.pageRead = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.onGoComic = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.page = 0;
         this.lastPage = 0;
-        this.setPage = function (page) {
+        this.onPageChange = function (advance) {
+            _this.page += advance;
+            _this._setPage(_this.page);
+        };
+        this.onChange = function (page) { return _this._setPage(page); };
+        this.onFullscreen = function () { return _this.isFullscreen = !_this.isFullscreen; };
+        this._setPage = function (page) {
             _this.page = page;
             _this.pageRead.emit(_this.page);
         };
-        this.onPageChange = function (advance) {
-            _this.page += advance;
-            _this.setPage(_this.page);
-        };
-        this.onChange = function (page) { return _this.setPage(page); };
     }
     IssuePresentationComponent.prototype.ngOnInit = function () {
         this.page = this.issue.page;
@@ -660,6 +668,10 @@ var IssuePresentationComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], IssuePresentationComponent.prototype, "pageRead", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
+        __metadata("design:type", Object)
+    ], IssuePresentationComponent.prototype, "onGoComic", void 0);
     IssuePresentationComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-issue-presentation',
@@ -1042,7 +1054,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/image-viewer/image-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<img [class.full-screen]=\"fullScreen\" class=\"img-fluid\" [src]=\"img\" alt=\"comic image\" (click)=\"toggleFullScreen()\" (load)=\"onLoaded()\">\n\n<div [hidden]=\"!fullScreen\">\n  <button class=\"button-hover button-prev\" (click)=\"swipe(-1)\"></button>\n  <button class=\"button-hover button-next\" (click)=\"swipe(1)\"></button>\n</div>\n"
+module.exports = "<img [class.full-screen]=\"fullscreen\" [src]=\"img\" alt=\"comic image\" (click)=\"onClick()\" (load)=\"onLoaded()\">\n\n<div [hidden]=\"!fullscreen\">\n  <button class=\"button-hover button-prev\" (click)=\"swipe(-1)\"></button>\n  <button class=\"button-hover button-next\" (click)=\"swipe(1)\"></button>\n</div>\n"
 
 /***/ }),
 
@@ -1065,13 +1077,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ImageViewerComponent = /** @class */ (function () {
     function ImageViewerComponent() {
         this.onSwiped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
-        this.fullScreen = false;
+        this.onToggle = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
-    ImageViewerComponent.prototype.toggleFullScreen = function () {
-        this.fullScreen = !this.fullScreen;
-    };
     ImageViewerComponent.prototype.swipe = function (e) {
         this.onSwiped.emit(e);
+    };
+    ImageViewerComponent.prototype.onClick = function () {
+        this.onToggle.emit();
     };
     ImageViewerComponent.prototype.onLoaded = function () {
         window.scroll({ top: 0, behavior: 'smooth' });
@@ -1081,16 +1093,23 @@ var ImageViewerComponent = /** @class */ (function () {
         __metadata("design:type", String)
     ], ImageViewerComponent.prototype, "img", void 0);
     __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+        __metadata("design:type", Boolean)
+    ], ImageViewerComponent.prototype, "fullscreen", void 0);
+    __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], ImageViewerComponent.prototype, "onSwiped", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
+        __metadata("design:type", Object)
+    ], ImageViewerComponent.prototype, "onToggle", void 0);
     ImageViewerComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'app-image-viewer',
+            selector: 'pou-image-viewer',
             template: __webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.html"),
             styles: [__webpack_require__("../../../../../src/app/image-viewer/image-viewer.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
+        })
     ], ImageViewerComponent);
     return ImageViewerComponent;
 }());
