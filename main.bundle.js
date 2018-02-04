@@ -1000,7 +1000,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".full-screen {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  z-index: 10;\n}\n\n.button-hover {\n  outline: none !important;\n  position: fixed;\n  z-index: 20;\n  height: 100vh;\n  padding: 0;\n  margin: 0;\n  width: 20vw;\n  top: 0;\n  background-color: rgba(0,0,0,0);\n  border: none;\n}\n\n.button-prev {\n  left: 0;\n}\n\n.button-next {\n  right: 0;\n}\n", ""]);
+exports.push([module.i, ".full-screen {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  z-index: 100;\n}\n\n.button-hover {\n  outline: none !important;\n  position: fixed;\n  z-index: 20;\n  height: 100vh;\n  padding: 0;\n  margin: 0;\n  width: 20vw;\n  top: 0;\n  background-color: rgba(0,0,0,0);\n  border: none;\n}\n\n.button-prev {\n  left: 0;\n}\n\n.button-next {\n  right: 0;\n}\n", ""]);
 
 // exports
 
