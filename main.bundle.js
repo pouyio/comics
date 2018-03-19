@@ -166,7 +166,7 @@ module.exports = ".navbar a {\n  font-size: .91em;\n}\n\n.spread-nav-menu {\n  d
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚\n      <span class=\"is-hidden-mobile\"> Home </span>\n    </a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <a class=\"navbar-item has-text-white\"> 🔍 Advanced</a>\n      <a class=\"navbar-item has-text-white\" [routerLink]=\"['/info']\"> ️📶 Info</a>\n      <div *ngIf=\"getBreadcrumbs(breadcrumbs).length\" class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
+module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" (click)=\"goTo('/comics')\" [routerLinkActive]=\"['is-active']\">📚\n      <span class=\"is-hidden-mobile\"> Home </span>\n    </a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"toggleActive()\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <a class=\"navbar-item has-text-white\" (click)=\"goTo('/search')\"> 🔍 Advanced</a>\n      <a class=\"navbar-item has-text-white\" (click)=\"goTo('/info')\"> ️📶 Info</a>\n      <div *ngIf=\"getBreadcrumbs(breadcrumbs).length\" class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" (click)=\"goTo(breadcrumb.url)\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -234,6 +234,13 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ngOnInit = function () {
         this.resolving = this.resolver.getState();
         this.cdRef.detectChanges();
+    };
+    AppComponent.prototype.toggleActive = function () {
+        this.isActive = !this.isActive;
+    };
+    AppComponent.prototype.goTo = function (route) {
+        this.router.navigate([route]);
+        this.isActive = false;
     };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -925,14 +932,14 @@ var templateObject_1, templateObject_2, templateObject_3;
 /***/ "./src/app/home/home-item/home-item.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".cover-background {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  min-height: 15.25rem;\n}\n\n.cover-background h1 {\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
+module.exports = ".cover-background-parent {\n  position: absolute;\n  right: 0;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  -webkit-filter: blur(2px);\n          filter: blur(2px);\n  margin: 2px;\n}\n\n.cover-background-child {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  width: 100%;\n  height: 100%;\n}\n\nh1 {\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
 
 /***/ }),
 
 /***/ "./src/app/home/home-item/home-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [routerLink]=\"['/comic', comic._id]\" class=\"box has-text-white cover-background is-flex flex-container relative\" [style.backgroundImage]=\"'url('+ comic.cover +')'\">\n\n  <div class=\"field to-corner to-right\" (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n    <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n    <label for=\"switch\"></label>\n  </div>\n  \n  <h1 style=\"font-size: 1.1em\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n  <small>\n    <span class=\"small tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-dark' : 'is-warning']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n  </small>\n\n</div>"
+module.exports = "<div [routerLink]=\"['/comic', comic._id]\" style=\"min-height: 15.25rem\" class=\"box has-text-white is-flex flex-container relative\">\n\n  <div class=\"cover-background-parent\">\n    <div class=\"cover-background-child\" [style.backgroundImage]=\"'url('+ comic.cover +')'\"></div>\n  </div>\n\n  <small>\n    <span class=\" to-corner to-left small tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-black' : 'is-dark']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n  </small>\n\n  <div class=\"field to-corner to-right\" (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n    <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n    <label for=\"switch\"></label>\n  </div>\n\n  <h1 style=\"font-size: 1.1em; z-index: 10\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
 
 /***/ }),
 
@@ -981,7 +988,7 @@ var HomeItemComponent = /** @class */ (function () {
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-primary is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container has-text-centered\">\n      <h1 class=\"title\">My Collection</h1>\n      <h2 class=\"subtitle\">Following {{($comics | async)?.length}} comics 🤖</h2>\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-mobile is-variable is-1 is-multiline is-centered\">\n      <div class=\"column is-one-quarter-tablet is-one-third-mobile\" *ngFor=\"let comic of $comics | async | select: 'comics'\">\n        <pou-home-item [comic]=\"comic\" (toggleButton)=\"toggleComicWish($event)\"></pou-home-item>\n      </div>\n    </div>\n\n  </div>\n</section> "
+module.exports = "<section class=\"hero is-primary is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container has-text-centered\">\n      <h1 class=\"title\">My Collection</h1>\n      <h2 class=\"subtitle\">Following {{($comics | async)?.length}} comics 🤖</h2>\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-mobile is-variable is-1 is-multiline is-centered\">\n      <div class=\"column is-one-quarter-tablet is-half-mobile\" *ngFor=\"let comic of $comics | async | select: 'comics'\">\n        <pou-home-item [comic]=\"comic\" (toggleButton)=\"toggleComicWish($event)\"></pou-home-item>\n      </div>\n    </div>\n\n  </div>\n</section> "
 
 /***/ }),
 
