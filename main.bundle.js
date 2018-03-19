@@ -17,6 +17,48 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
+/***/ "./src/app/advanced-search/advanced-search.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  advanced-search works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/advanced-search/advanced-search.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdvancedSearchComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var AdvancedSearchComponent = /** @class */ (function () {
+    function AdvancedSearchComponent() {
+    }
+    AdvancedSearchComponent.prototype.ngOnInit = function () {
+    };
+    AdvancedSearchComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'pou-advanced-search',
+            template: __webpack_require__("./src/app/advanced-search/advanced-search.component.html")
+        }),
+        __metadata("design:paramtypes", [])
+    ], AdvancedSearchComponent);
+    return AdvancedSearchComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/api.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -124,7 +166,7 @@ module.exports = ".navbar a {\n  font-size: .91em;\n}\n\n.spread-nav-menu {\n  d
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚 <span class=\"is-hidden-mobile\"> Home </span></a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <a class=\"navbar-item has-text-white\" [routerLink]=\"['/search']\"> 🔍 Advanced</a>\n      <div *ngIf=\"getBreadcrumbs(breadcrumbs).length\" class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
+module.exports = "<nav *ngIf=\"logged\" class=\"navbar is-dark is-fixed-top\" role=\"navigation\" aria-label=\"main navigation\">\n\n  <div class=\"navbar-brand\">\n    <a class=\"navbar-item is-size-4 has-text-weight-light\" routerLink=\"/comics\" [routerLinkActive]=\"['is-active']\">📚\n      <span class=\"is-hidden-mobile\"> Home </span>\n    </a>\n\n    <div style=\"display: flex; flex-direction: column; justify-content: center;\">\n      <pou-search></pou-search>\n    </div>\n\n    <div class=\"navbar-burger burger\" [ngClass]=\"{'is-active': isActive}\" (click)=\"isActive = !isActive\">\n      <span></span>\n      <span></span>\n      <span></span>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{'is-active': isActive, 'spread-nav-menu': isActive}\" class=\"navbar-menu\">\n    <div class=\"navbar-start\">\n      <a class=\"navbar-item has-text-white\"> 🔍 Advanced</a>\n      <a class=\"navbar-item has-text-white\" [routerLink]=\"['/info']\"> ️📶 Info</a>\n      <div *ngIf=\"getBreadcrumbs(breadcrumbs).length\" class=\"navbar-item\">\n        <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n          <ul>\n            <li *ngFor=\"let breadcrumb of getBreadcrumbs(breadcrumbs)\">\n              <a class=\"has-text-white\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.title}}</a>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n    <div class=\"navbar-end\">\n      <a class=\"navbar-item has-text-white\" (click)=\"logout()\"> ❌ Logout</a>\n    </div>\n  </div>\n</nav>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -245,6 +287,8 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_apollo_cache_inmemory__ = __webpack_require__("./node_modules/apollo-cache-inmemory/lib/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__search_search_item_search_item_component__ = __webpack_require__("./src/app/search/search-item/search-item.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__advanced_search_advanced_search_component__ = __webpack_require__("./src/app/advanced-search/advanced-search.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__info_info_component__ = __webpack_require__("./src/app/info/info.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -254,6 +298,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
 
 
 
@@ -301,7 +347,9 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_19__home_home_item_home_item_component__["a" /* HomeItemComponent */],
                 __WEBPACK_IMPORTED_MODULE_20__comic_comic_presentation_comic_presentation_component__["a" /* ComicPresentationComponent */],
                 __WEBPACK_IMPORTED_MODULE_21__comic_issue_issue_presentation_issue_presentation_component__["a" /* IssuePresentationComponent */],
-                __WEBPACK_IMPORTED_MODULE_26__search_search_item_search_item_component__["a" /* SearchItemComponent */]
+                __WEBPACK_IMPORTED_MODULE_26__search_search_item_search_item_component__["a" /* SearchItemComponent */],
+                __WEBPACK_IMPORTED_MODULE_27__advanced_search_advanced_search_component__["a" /* AdvancedSearchComponent */],
+                __WEBPACK_IMPORTED_MODULE_28__info_info_component__["a" /* InfoComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -345,6 +393,10 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login_component__ = __webpack_require__("./src/app/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_guard__ = __webpack_require__("./src/app/auth-guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__info_info_component__ = __webpack_require__("./src/app/info/info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_app_advanced_search_advanced_search_component__ = __webpack_require__("./src/app/advanced-search/advanced-search.component.ts");
+
+
 
 
 
@@ -359,6 +411,8 @@ var AppRoutes = [
             { path: 'comics', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */] },
             { path: 'comic/:id', component: __WEBPACK_IMPORTED_MODULE_0__comic_comic_component__["a" /* ComicComponent */] },
             { path: 'comic/:id/:issue', component: __WEBPACK_IMPORTED_MODULE_1__comic_issue_comic_issue_component__["a" /* ComicIssueComponent */] },
+            { path: 'info', component: __WEBPACK_IMPORTED_MODULE_5__info_info_component__["a" /* InfoComponent */] },
+            { path: 'search', component: __WEBPACK_IMPORTED_MODULE_6_app_advanced_search_advanced_search_component__["a" /* AdvancedSearchComponent */] },
         ]
     },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__login_login_component__["a" /* LoginComponent */] },
@@ -684,7 +738,7 @@ module.exports = ".zoomable {\n  position: relative;\n  -webkit-transition: all 
 /***/ "./src/app/comic/comic-presentation/comic-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <p class=\"tags is-centered\">\n        <span class=\"tag is-rounded\" *ngFor=\"let genre of comic.genres\">\n          {{ genre.name }}\n        </span>\n      </p>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">✈️ {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n  <div class=\"hero-foot is-hidden-tablet\">\n    <nav class=\"tabs is-boxed is-fullwidth\">\n      <div class=\"container\">\n        <ul>\n          <li [ngClass]=\"{'is-active': selectedTab === 'general'}\" (click)=\"selectedTab = 'general'\">\n            <a>General</a>\n          </li>\n          <li [ngClass]=\"{'is-active': selectedTab === 'issues'}\" (click)=\"selectedTab = 'issues'\">\n            <a>Issues</a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\" *ngIf=\"isVisible('general')\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artist</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publisher</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writer</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img (click)=\"toggleZoomIn()\" [ngClass]=\"{'zoomIn': zoomed}\" class=\"img-fluid zoomable\" [src]=\"comic.cover\" alt=\"cover\" style=\"border-radius: 3px\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\" *ngIf=\"isVisible('issues')\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: .6em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <ul [ngClass]=\"{'no-overflow': currentWidth > mobileWidth}\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n                <div class=\"is-flex\" style=\"align-items: center; justify-content: space-between\">\n\n                  <span>\n                    {{getPercentageIcon(issue.percentage)}}\n                  </span>\n\n                  <a [routerLink]=\"['/comic', comic._id, issue.id]\"> {{issue.title}}</a>\n\n                  <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                    <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                    <label for=\"switchRounded\"></label>\n                  </div>\n\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
+module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <p class=\"tags is-centered\">\n        <span class=\"tag is-rounded\" *ngFor=\"let genre of comic.genres\">\n          {{ genre.name }}\n        </span>\n      </p>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n  <div class=\"hero-foot is-hidden-tablet\">\n    <nav class=\"tabs is-boxed is-fullwidth\">\n      <div class=\"container\">\n        <ul>\n          <li [ngClass]=\"{'is-active': selectedTab === 'general'}\" (click)=\"selectedTab = 'general'\">\n            <a>General</a>\n          </li>\n          <li [ngClass]=\"{'is-active': selectedTab === 'issues'}\" (click)=\"selectedTab = 'issues'\">\n            <a>Issues</a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\" *ngIf=\"isVisible('general')\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artist</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publisher</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writer</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img (click)=\"toggleZoomIn()\" [ngClass]=\"{'zoomIn': zoomed}\" class=\"img-fluid zoomable\" [src]=\"comic.cover\" alt=\"cover\" style=\"border-radius: 3px\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\" *ngIf=\"isVisible('issues')\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: .6em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <ul [ngClass]=\"{'no-overflow': currentWidth > mobileWidth}\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n                <div class=\"is-flex\" style=\"align-items: center; justify-content: space-between\">\n\n                  <span>\n                    {{getPercentageIcon(issue.percentage)}}\n                  </span>\n\n                  <a [routerLink]=\"['/comic', comic._id, issue.id]\"> {{issue.title}}</a>\n\n                  <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                    <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                    <label for=\"switchRounded\"></label>\n                  </div>\n\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
 
 /***/ }),
 
@@ -871,14 +925,14 @@ var templateObject_1, templateObject_2, templateObject_3;
 /***/ "./src/app/home/home-item/home-item.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".cover-background {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  min-height: 15.25rem;\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
+module.exports = ".cover-background {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  min-height: 15.25rem;\n}\n\n.cover-background h1 {\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
 
 /***/ }),
 
 /***/ "./src/app/home/home-item/home-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [routerLink]=\"['/comic', comic._id]\" class=\"box has-text-white cover-background is-flex flex-container relative\" [style.backgroundImage]=\"'url('+ comic.cover +')'\">\n\n  <div class=\"field to-corner to-right\" (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n    <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n    <label for=\"switch\"></label>\n  </div>\n\n  <small>\n    <span class=\"small\">✈️ {{comic.status}}</span>\n  </small>\n  <h1 style=\"font-size: 1.1em\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
+module.exports = "<div [routerLink]=\"['/comic', comic._id]\" class=\"box has-text-white cover-background is-flex flex-container relative\" [style.backgroundImage]=\"'url('+ comic.cover +')'\">\n\n  <div class=\"field to-corner to-right\" (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n    <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n    <label for=\"switch\"></label>\n  </div>\n  \n  <h1 style=\"font-size: 1.1em\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n  <small>\n    <span class=\"small tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-dark' : 'is-warning']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n  </small>\n\n</div>"
 
 /***/ }),
 
@@ -1073,6 +1127,65 @@ var ImageViewerComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/info/info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<section class=\"hero is-primary is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container has-text-centered\">\n      <h1 class=\"title\">Info</h1>\n      <h2 class=\"subtitle\">Last updated: 📅</h2>\n    </div>\n  </div>\n</section>\n\n<section class=\"section\" *ngIf=\"$info | async | select: 'info'; let info\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-4\">\n\n                <article class=\"tile is-child notification is-link content has-text-centered\" (click)=\"showTotal = !showTotal\">\n                  <p class=\"title is-marginless\">Comics {{showTotal ? '⤵️' : '⤴️'}}</p>\n                  <p class=\"big-text\" *ngIf=\"showTotal\"> {{info.comics.ongoing + info.comics.completed | number}} </p>\n                  <span *ngIf=\"!showTotal\">\n                    <p>Ongoing 🏗: {{info.comics.ongoing | number}}</p>\n                    <p>Completed 🏛: {{info.comics.completed | number}}</p>\n                  </span>\n                </article>\n\n              </div>\n\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child notification is-white content has-text-centered\">\n                  <p class=\"title is-marginless\">Issues</p>\n                  <p class=\"big-text\">{{info.issues | number}}</p>\n                </article>\n\n              </div>\n\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child notification is-success content has-text-centered\">\n                  <p class=\"title is-marginless\">Publishers</p>\n                  <p class=\"big-text\">{{info.publishers | number}}</p>\n                </article>\n\n              </div>\n\n            </div>\n\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child notification is-dark content has-text-centered\">\n                  <p class=\"title is-marginless\">Writers</p>\n                  <p class=\"big-text\">{{info.writers | number}}</p>\n                </article>\n\n              </div>\n\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child notification is-warning content has-text-centered\">\n                  <p class=\"title is-marginless\">Artists</p>\n                  <p class=\"big-text\">{{info.artists | number}}</p>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child notification is-danger content has-text-centered\">\n                  <p class=\"title is-marginless\">Genres</p>\n                  <p class=\"big-text\">{{info.genres | number}}</p>\n                </article>\n\n              </div>\n            </div>\n\n          </div>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n</section>"
+
+/***/ }),
+
+/***/ "./src/app/info/info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__("./node_modules/graphql-tag/src/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_angular__ = __webpack_require__("./node_modules/apollo-angular/index.js");
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var InfoComponent = /** @class */ (function () {
+    function InfoComponent(apollo) {
+        this.apollo = apollo;
+        this.showTotal = true;
+        this.infoQuery = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{\n    info {\n      genres\n      writers\n      publishers\n      artists\n      issues\n      comics {\n        completed\n        ongoing\n      }\n    }\n  }  \n  "], ["{\n    info {\n      genres\n      writers\n      publishers\n      artists\n      issues\n      comics {\n        completed\n        ongoing\n      }\n    }\n  }  \n  "])));
+    }
+    InfoComponent.prototype.ngOnInit = function () {
+        this.$info = this.apollo.query({ query: this.infoQuery }).share();
+    };
+    InfoComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'pou-info',
+            template: __webpack_require__("./src/app/info/info.component.html"),
+            styles: [
+                "\n    .big-text {\n      font-size: 3.2rem;\n    }\n    "
+            ]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_apollo_angular__["a" /* Apollo */]])
+    ], InfoComponent);
+    return InfoComponent;
+}());
+
+var templateObject_1;
+
+
+/***/ }),
+
 /***/ "./src/app/interceptor.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1201,7 +1314,7 @@ module.exports = ".to-corner {\n    position: absolute;\n    top: .4em;\n}\n\n.t
 /***/ "./src/app/search/search-item/search-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"tile is-ancestor columns is-mobile\" style=\"border: 1px solid; border-radius: 3px; margin: .3em\">\n  <div class=\"tile is-vertical is-4\">\n    <div class=\"tile is-parent is-paddingless\">\n      <article class=\"tile is-child\">\n        <figure class=\"image\">\n          <img [src]=\"comic.cover\" alt=\"cover\">\n\n          <div class=\"field to-corner to-right\" (click)=\"onToggleWish.emit(comic)\">\n            <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n            <label for=\"switch\"></label>\n          </div>\n\n        </figure>\n      </article>\n    </div>\n  </div>\n\n  <div class=\"tile is-vertical is-parent\" (click)=\"goTo.emit(comic._id)\">\n\n    <div class=\"tile is-child has-text-centered\">\n      <p class=\"has-text-weight-bold is-size-4-tablet\" >{{comic.title}}</p>\n      <p class=\"is-size-7\">✈️ {{comic.status}}</p>\n    </div>\n    \n    <div class=\"tile is-child\">\n      <p class=\"has-text-centered is-size-7-mobile\">📅 {{comic.publication_date}}</p>\n      <p class=\"is-size-7 has-text-justified\">{{limit(comic.summary, 100)}}</p>\n    </div>\n\n  </div>\n\n</div>"
+module.exports = "<div class=\"tile is-ancestor columns is-mobile\" style=\"border: 1px solid; border-radius: 3px; margin: .3em\">\n  <div class=\"tile is-vertical is-4\">\n    <div class=\"tile is-parent is-paddingless\">\n      <article class=\"tile is-child\">\n        <figure class=\"image\">\n          <img [src]=\"comic.cover\" alt=\"cover\">\n\n          <div class=\"field to-corner to-right\" (click)=\"onToggleWish.emit(comic)\">\n            <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n            <label for=\"switch\"></label>\n          </div>\n\n        </figure>\n      </article>\n    </div>\n  </div>\n\n  <div class=\"tile is-vertical is-parent\" (click)=\"goTo.emit(comic._id)\">\n\n    <div class=\"tile is-child has-text-centered\">\n      <p class=\"has-text-weight-bold is-size-4-tablet\" >{{comic.title}}</p>\n      <p class=\"is-size-7\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</p>\n    </div>\n    \n    <div class=\"tile is-child\">\n      <p class=\"has-text-centered is-size-7-mobile\">📅 {{comic.publication_date}}</p>\n      <p class=\"is-size-7 has-text-justified\">{{limit(comic.summary, 100)}}</p>\n    </div>\n\n  </div>\n\n</div>"
 
 /***/ }),
 
