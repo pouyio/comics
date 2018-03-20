@@ -988,7 +988,7 @@ var HomeItemComponent = /** @class */ (function () {
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-primary is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container has-text-centered\">\n      <h1 class=\"title\">My Collection</h1>\n      <h2 class=\"subtitle\">Following {{($comics | async)?.length}} comics 🤖</h2>\n    </div>\n  </div>\n</section>\n\n<section class=\"section\">\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-mobile is-variable is-1 is-multiline is-centered\">\n      <div class=\"column is-one-quarter-tablet is-half-mobile\" *ngFor=\"let comic of $comics | async | select: 'comics'\">\n        <pou-home-item [comic]=\"comic\" (toggleButton)=\"toggleComicWish($event)\"></pou-home-item>\n      </div>\n    </div>\n\n  </div>\n</section> "
+module.exports = "<ng-container *ngIf=\"$comics | async; let comics\">\n\n  <section class=\"hero is-primary is-bold\">\n    <div class=\"hero-body\">\n      <div class=\"container has-text-centered\">\n        <h1 class=\"title\">My Collection</h1>\n      </div>\n    </div>\n    <div class=\"hero-foot\">\n      <nav class=\"tabs is-boxed is-fullwidth\">\n        <div class=\"container\">\n          <ul>\n            <li [ngClass]=\"{'is-active': selectedTab === 'home'}\" (click)=\"selectedTab = 'home'\">\n              <a>\n                Following &nbsp;\n                <span class=\"tag is-rounded\"> {{comics.wished.length}}</span>\n              </a>\n            </li>\n            <li [ngClass]=\"{'is-active': selectedTab === 'new'}\" (click)=\"selectedTab = 'new'\">\n              <a>New &nbsp;\n                <span class=\"tag is-rounded is-success\"> {{comics.lastUpdated.length}}</span>\n              </a>\n            </li>\n          </ul>\n        </div>\n      </nav>\n    </div>\n  </section>\n\n  <section class=\"section\">\n    <div class=\"container-fluid\">\n\n      <div *ngIf=\"selectedTab === 'home'\" class=\"columns is-mobile is-variable is-1 is-multiline is-centered\">\n        <div class=\"column is-one-quarter-tablet is-half-mobile\" *ngFor=\"let comic of comics.wished\">\n          <pou-home-item [comic]=\"comic\" (toggleButton)=\"toggleComicWish($event)\"></pou-home-item>\n        </div>\n      </div>\n      \n      <div *ngIf=\"selectedTab === 'new'\" class=\"columns is-mobile is-variable is-1 is-multiline is-centered\">\n        <div class=\"column is-one-quarter-tablet is-half-mobile\" *ngFor=\"let comic of comics.lastUpdated\">\n          <pou-home-item [comic]=\"comic\" (toggleButton)=\"toggleComicWish($event)\"></pou-home-item>\n        </div>\n      </div>\n\n    </div>\n  </section>\n</ng-container>"
 
 /***/ }),
 
@@ -1021,7 +1021,8 @@ var HomeComponent = /** @class */ (function () {
     function HomeComponent(apollo) {
         var _this = this;
         this.apollo = apollo;
-        this.comicsQuery = __WEBPACK_IMPORTED_MODULE_2_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{ \n    comics (wish: true) { \n      _id\n      title\n      wish\n      cover\n      status\n    }\n  }\n  "], ["{ \n    comics (wish: true) { \n      _id\n      title\n      wish\n      cover\n      status\n    }\n  }\n  "])));
+        this.selectedTab = 'home';
+        this.comicsQuery = __WEBPACK_IMPORTED_MODULE_2_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{ \n    wished: comics (wish: true) { \n      _id\n      title\n      wish\n      cover\n      status\n    },\n    lastUpdated: comics (onlyNew: true) {\n      _id\n      title\n      wish\n      cover\n      status\n    }\n  }\n  "], ["{ \n    wished: comics (wish: true) { \n      _id\n      title\n      wish\n      cover\n      status\n    },\n    lastUpdated: comics (onlyNew: true) {\n      _id\n      title\n      wish\n      cover\n      status\n    }\n  }\n  "])));
         this.markComicWish = __WEBPACK_IMPORTED_MODULE_2_graphql_tag___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wish\n    }\n  }\n  "], ["\n  mutation ($comicId: String!, $wish: Boolean!) {\n    markComicWish(_id: $comicId, wish: $wish) {\n      _id\n      wish\n    }\n  }\n  "])));
         this.toggleComicWish = function (comic) {
             var isWish = !comic.wish;
@@ -1043,7 +1044,10 @@ var HomeComponent = /** @class */ (function () {
         };
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.$comics = this.apollo.watchQuery({ query: this.comicsQuery }).valueChanges.share();
+        this.$comics = this.apollo.watchQuery({ query: this.comicsQuery })
+            .valueChanges
+            .pluck('data')
+            .share();
     };
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
