@@ -97,6 +97,7 @@ var ApiService = /** @class */ (function (_super) {
             });
         };
         _this.logout = function () { return _this.auth.removeToken(); };
+        _this.getLog = function () { return _this.http.get(_this.baseUrl + "/log", { responseType: 'text' }); };
         return _this;
     }
     ApiService.prototype.getComic = function (id) {
@@ -1141,7 +1142,7 @@ var ImageViewerComponent = /** @class */ (function () {
 /***/ "./src/app/info/info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"$info | async | select: 'info'; let info\">\n\n  <section class=\"hero is-primary is-bold\">\n    <div class=\"hero-body\">\n      <div class=\"container has-text-centered\" (click)=\"showTime = !showTime\">\n        <h1 class=\"title\">Info {{showTime ? '⤵️' : '⤴️'}}</h1>\n        <h2 class=\"subtitle\" >{{showTime ? '⏱' : '📅'}} Updated\n          <span *ngIf=\"showTime\">\n             {{daysSinceLastUpdate}} ago\n          </span>\n          <span *ngIf=\"!showTime\">\n            on {{info.last_update | date}}\n          </span>\n        </h2>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"section\">\n\n    <div class=\"container-fluid\">\n\n      <div class=\"columns is-tablet\">\n\n        <div class=\"column\">\n          <div class=\"tile is-ancestor\">\n            <div class=\"tile is-vertical\">\n              <div class=\"tile\">\n                <div class=\"tile is-parent is-vertical is-4\">\n\n                  <article class=\"tile is-child notification is-link content has-text-centered\" (click)=\"showTotal = !showTotal\">\n                    <p class=\"title is-marginless\">Comics {{showTotal ? '⤵️' : '⤴️'}}</p>\n                    <p class=\"big-text\" *ngIf=\"showTotal\"> {{info.comics.ongoing + info.comics.completed | number}} </p>\n                    <span *ngIf=\"!showTotal\">\n                      <p>Ongoing 🏗: {{info.comics.ongoing | number}}</p>\n                      <p>Completed 🏛: {{info.comics.completed | number}}</p>\n                    </span>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-white content has-text-centered\">\n                    <p class=\"title is-marginless\">Issues</p>\n                    <p class=\"big-text\">{{info.issues | number}}</p>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-success content has-text-centered\">\n                    <p class=\"title is-marginless\">Publishers</p>\n                    <p class=\"big-text\">{{info.publishers | number}}</p>\n                  </article>\n\n                </div>\n\n              </div>\n\n              <div class=\"tile\">\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-dark content has-text-centered\">\n                    <p class=\"title is-marginless\">Writers</p>\n                    <p class=\"big-text\">{{info.writers | number}}</p>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-warning content has-text-centered\">\n                    <p class=\"title is-marginless\">Artists</p>\n                    <p class=\"big-text\">{{info.artists | number}}</p>\n                  </article>\n\n                </div>\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-danger content has-text-centered\">\n                    <p class=\"title is-marginless\">Genres</p>\n                    <p class=\"big-text\">{{info.genres | number}}</p>\n                  </article>\n\n                </div>\n              </div>\n\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n\n  </section>\n</div>"
+module.exports = "<div *ngIf=\"$info | async | select: 'info'; let info\">\n\n  <section class=\"hero is-primary is-bold\">\n    <div class=\"hero-body\">\n      <div class=\"container has-text-centered\" (click)=\"showTime = !showTime\">\n        <h1 class=\"title\">Info {{showTime ? '🔽' : '🔼'}}</h1>\n        <h2 class=\"subtitle\">{{showTime ? '⏱' : '📅'}} Updated\n          <span *ngIf=\"showTime\">\n            {{daysSinceLastUpdate}} ago\n          </span>\n          <span *ngIf=\"!showTime\">\n            on {{info.last_update | date}}\n          </span>\n        </h2>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"section\">\n\n    <div class=\"container-fluid\">\n\n      <div class=\"columns is-tablet\">\n\n        <div class=\"column\">\n          <div class=\"tile is-ancestor\">\n            <div class=\"tile is-vertical\">\n              <div class=\"tile\">\n                <div class=\"tile is-parent is-vertical is-4\">\n\n                  <article class=\"tile is-child notification is-link content has-text-centered\" (click)=\"showTotal = !showTotal\">\n                    <p class=\"title is-marginless\">Comics {{showTotal ? '🔽' : '🔼'}}</p>\n                    <p class=\"big-text\" *ngIf=\"showTotal\"> {{info.comics.ongoing + info.comics.completed | number}} </p>\n                    <span *ngIf=\"!showTotal\">\n                      <p>Ongoing 🏗: {{info.comics.ongoing | number}}</p>\n                      <p>Completed 🏛: {{info.comics.completed | number}}</p>\n                    </span>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-white content has-text-centered\">\n                    <p class=\"title is-marginless\">Issues</p>\n                    <p class=\"big-text\">{{info.issues | number}}</p>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-success content has-text-centered\">\n                    <p class=\"title is-marginless\">Publishers</p>\n                    <p class=\"big-text\">{{info.publishers | number}}</p>\n                  </article>\n\n                </div>\n\n              </div>\n\n              <div class=\"tile\">\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-dark content has-text-centered\">\n                    <p class=\"title is-marginless\">Writers</p>\n                    <p class=\"big-text\">{{info.writers | number}}</p>\n                  </article>\n\n                </div>\n\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-warning content has-text-centered\">\n                    <p class=\"title is-marginless\">Artists</p>\n                    <p class=\"big-text\">{{info.artists | number}}</p>\n                  </article>\n\n                </div>\n                <div class=\"tile is-parent is-4\">\n\n                  <article class=\"tile is-child notification is-danger content has-text-centered\">\n                    <p class=\"title is-marginless\">Genres</p>\n                    <p class=\"big-text\">{{info.genres | number}}</p>\n                  </article>\n\n                </div>\n              </div>\n\n              <div class=\"tile is-parent\">\n                <article class=\"tile is-child notification is-dark content has-text-centered\" (click)=\"showLog = !showLog\">\n                  <p class=\"title is-marginless\">Log {{showLog ? '🔽' : '🔼'}}</p>\n                  <p *ngIf=\"showLog\" style=\"white-space: pre-wrap; max-height: 200px; overflow: auto;\" class=\"has-text-left is-size-7\">{{log$ | async}}</p>\n                </article>\n              </div>\n\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n\n  </section>\n</div>"
 
 /***/ }),
 
@@ -1154,6 +1155,7 @@ module.exports = "<div *ngIf=\"$info | async | select: 'info'; let info\">\n\n  
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__("./node_modules/graphql-tag/src/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_angular__ = __webpack_require__("./node_modules/apollo-angular/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api_service__ = __webpack_require__("./src/app/api.service.ts");
 var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
@@ -1170,11 +1172,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var InfoComponent = /** @class */ (function () {
-    function InfoComponent(apollo) {
+    function InfoComponent(apollo, apiService) {
         this.apollo = apollo;
+        this.apiService = apiService;
         this.showTotal = true;
         this.showTime = true;
+        this.showLog = false;
         this.infoQuery = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{\n    info {\n      last_update\n      genres\n      writers\n      publishers\n      artists\n      issues\n      comics {\n        completed\n        ongoing\n      }\n    }\n  }  \n  "], ["{\n    info {\n      last_update\n      genres\n      writers\n      publishers\n      artists\n      issues\n      comics {\n        completed\n        ongoing\n      }\n    }\n  }  \n  "])));
     }
     InfoComponent.prototype.ngOnInit = function () {
@@ -1185,6 +1190,7 @@ var InfoComponent = /** @class */ (function () {
             var data = _a.data;
             return _this.setDaysSinceLastUpdate(data.info.last_update);
         });
+        this.log$ = this.apiService.getLog();
     };
     InfoComponent.prototype.setDaysSinceLastUpdate = function (date) {
         var duration = (new Date().getTime() - new Date(date).getTime());
@@ -1199,11 +1205,11 @@ var InfoComponent = /** @class */ (function () {
             selector: 'pou-info',
             template: __webpack_require__("./src/app/info/info.component.html"),
             styles: [
-                "\n    .big-text {\n      font-size: 3.2rem;\n    }\n    "
+                "\n    .big-text {\n      font-size: 2.8rem;\n    }\n    "
             ],
             changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_apollo_angular__["a" /* Apollo */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_apollo_angular__["a" /* Apollo */], __WEBPACK_IMPORTED_MODULE_3__api_service__["a" /* ApiService */]])
     ], InfoComponent);
     return InfoComponent;
 }());
