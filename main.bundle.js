@@ -933,7 +933,7 @@ var templateObject_1, templateObject_2, templateObject_3;
 /***/ "./src/app/home/home-item/home-item.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".cover-background-parent {\n  position: absolute;\n  right: 0;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  -webkit-filter: blur(2px);\n          filter: blur(2px);\n  margin: 2px;\n}\n\n.cover-background-child {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  width: 100%;\n  height: 100%;\n}\n\nh1 {\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
+module.exports = ".cover-background-parent {\n  position: absolute;\n  right: 0;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  margin: 2px;\n}\n\n.cover-background-child {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  color: white;\n  width: 100%;\n  height: 100%;\n}\n\nh1 {\n  text-shadow: 0 0 5px black;\n}\n\n.flex-container {\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  position: relative;\n}\n\n.to-corner {\n  position: absolute;\n  top: .2em;\n}\n\n.to-right {\n  right: 0;\n}\n\n.to-left {\n  left: 0;\n}\n"
 
 /***/ }),
 
