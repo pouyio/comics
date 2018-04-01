@@ -874,7 +874,7 @@ var IssuePresentationComponent = /** @class */ (function () {
 /***/ "./src/app/comic/comic-presentation/comic-presentation.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".zoomable {\n  position: relative;\n  -webkit-transition: all .2s ease-in-out;\n  transition: all .2s ease-in-out;\n}\n\n.zoomIn {\n  -webkit-transform: scale(3.5);\n          transform: scale(3.5);\n  z-index: 200;\n}\n\n.no-overflow {\n  overflow-y: auto;\n  max-height: 63vh;\n}\n"
+module.exports = ".zoomable {\n  position: relative;\n  -webkit-transition: all .2s ease-in-out;\n  transition: all .2s ease-in-out;\n}\n\n.zoomIn {\n  -webkit-transform: scale(3.5);\n          transform: scale(3.5);\n  z-index: 200;\n}\n\n.no-overflow {\n  overflow-y: auto;\n  max-height: 63vh;\n  -webkit-overflow-scrolling: touch;\n}\n"
 
 /***/ }),
 
