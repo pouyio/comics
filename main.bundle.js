@@ -430,6 +430,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_typeahead_typeahead_component__ = __webpack_require__("./src/app/components/typeahead/typeahead.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pipes_entity_resolver_pipe__ = __webpack_require__("./src/app/pipes/entity-resolver.pipe.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_entity_form_entity_form_component__ = __webpack_require__("./src/app/components/entity-form/entity-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_slow_image_slow_image_component__ = __webpack_require__("./src/app/components/slow-image/slow-image.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -439,6 +440,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -497,6 +499,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_29__components_typeahead_typeahead_component__["a" /* TypeaheadComponent */],
                 __WEBPACK_IMPORTED_MODULE_30__pipes_entity_resolver_pipe__["a" /* EntityResolverPipe */],
                 __WEBPACK_IMPORTED_MODULE_31__components_entity_form_entity_form_component__["a" /* EntityFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__components_slow_image_slow_image_component__["a" /* SlowImageComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -885,7 +888,7 @@ module.exports = ".zoomable {\n  position: relative;\n  -webkit-transition: all 
 /***/ "./src/app/comic/comic-presentation/comic-presentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <p class=\"tags is-centered\">\n        <span class=\"tag is-rounded\" *ngFor=\"let genre of comic.genres\">\n          <a [routerLink]=\"['/search']\" [queryParams]=\"{genres: genre.id}\">\n            {{ genre.name }}\n          </a>\n        </span>\n      </p>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n  <div class=\"hero-foot is-hidden-tablet\">\n    <nav class=\"tabs is-boxed is-fullwidth\">\n      <div class=\"container\">\n        <ul>\n          <li [ngClass]=\"{'is-active': selectedTab === 'general'}\" (click)=\"onSelectTab('general')\">\n            <a>General</a>\n          </li>\n          <li [ngClass]=\"{'is-active': selectedTab === 'issues'}\" (click)=\"onSelectTab('issues')\">\n            <a>Issues</a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\" *ngIf=\"isVisible('general')\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artists</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publishers</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writers</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\">\n                    <img (click)=\"toggleZoomIn()\" [ngClass]=\"{'zoomIn': zoomed}\" class=\"img-fluid zoomable\" [src]=\"comic.cover\" alt=\"cover\" style=\"border-radius: 3px\">\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\" *ngIf=\"isVisible('issues')\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: .6em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <small>Updated: {{comic.last_update | date: 'longDate'}}</small>\n            <ul [ngClass]=\"{'no-overflow': currentWidth > mobileWidth}\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n                <div class=\"is-flex\" style=\"align-items: center; justify-content: space-between\">\n\n                  <span>\n                    {{getPercentageIcon(issue.percentage)}}\n                  </span>\n\n                  <a [routerLink]=\"['/comic', comic._id, issue.id]\"> {{issue.title}}</a>\n\n                  <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                    <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                    <label for=\"switchRounded\"></label>\n                  </div>\n\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
+module.exports = "<section class=\"hero is-dark is-bold\">\n  <div class=\"hero-body\">\n    <div class=\"container\">\n\n      <h1 class=\"title has-text-centered\">\n        {{comic.title}}\n      </h1>\n\n      <p class=\"tags is-centered\">\n        <span class=\"tag is-rounded\" *ngFor=\"let genre of comic.genres\">\n          <a [routerLink]=\"['/search']\" [queryParams]=\"{genres: genre.id}\">\n            {{ genre.name }}\n          </a>\n        </span>\n      </p>\n\n      <h2 class=\"is-flex\" style=\"justify-content: space-between; max-width: 70vw; margin: auto;\">\n        <div (click)=\"toggleWish.emit(comic)\">\n          <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n          <label for=\"switchRounded\">{{comic.wish ? 'Following': 'Follow'}}</label>\n        </div>\n        <span class=\"tag is-rounded\" [ngClass]=\"comic.status === 'Completed' ? 'is-primary': 'is-warning'\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</span>\n      </h2>\n\n    </div>\n  </div>\n  <div class=\"hero-foot is-hidden-tablet\">\n    <nav class=\"tabs is-boxed is-fullwidth\">\n      <div class=\"container\">\n        <ul>\n          <li [ngClass]=\"{'is-active': selectedTab === 'general'}\" (click)=\"onSelectTab('general')\">\n            <a>General</a>\n          </li>\n          <li [ngClass]=\"{'is-active': selectedTab === 'issues'}\" (click)=\"onSelectTab('issues')\">\n            <a>Issues</a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n  </div>\n</section>\n\n<section class=\"section\">\n\n  <div class=\"container-fluid\">\n\n    <div class=\"columns is-tablet\">\n\n      <div class=\"column is-7\" *ngIf=\"isVisible('general')\">\n        <div class=\"tile is-ancestor\">\n          <div class=\"tile is-vertical\">\n            <div class=\"tile\">\n              <div class=\"tile is-parent is-vertical is-8\">\n\n                <article class=\"tile is-child notification is-warning\">\n                  <p class=\"title is-marginless\">Info</p>\n                  <ul>\n                    <li>\n                      <strong>Artists</strong>:\n                      <span *ngFor=\"let artist of comic.artists\">\n                        {{artist.first_name}} {{artist.last_name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Publishers</strong>:\n                      <span *ngFor=\"let publisher of comic.publishers\">\n                        {{publisher.name}}\n                      </span>\n                    </li>\n                    <li>\n                      <strong>Writers</strong>\n                      <span *ngFor=\"let writer of comic.writers\">\n                        {{writer.first_name}} {{writer.last_name}}\n                      </span>\n                    </li>\n                  </ul>\n                </article>\n\n              </div>\n              <div class=\"tile is-parent is-4\">\n\n                <article class=\"tile is-child\">\n                  <figure class=\"image\" style=\"height:100%; min-height: 150px\">\n                    <div (click)=\"toggleZoomIn()\" [ngClass]=\"{'zoomIn': zoomed}\" class=\"img-fluid zoomable\" style=\"border-radius: 3px\">\n                      <pou-slow-image [src]=\"comic.cover\"></pou-slow-image>\n                    </div>\n                  </figure>\n                </article>\n\n              </div>\n            </div>\n            <div class=\"tile is-parent\">\n\n              <article class=\"tile is-child notification is-info\">\n                <p class=\"title is-marginless\"> 📅 {{comic.publication_date}} </p>\n                <p class=\"has-text-justified\"> {{comic.summary}}</p>\n              </article>\n\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"column is-5\" *ngIf=\"isVisible('issues')\">\n        <div class=\"tile is-acenstor\">\n          <article class=\"tile is-child notification is-success\" style=\"padding-right: .6em\">\n            <p class=\"title is-marginless\">Issues ({{orderedIssues.length}})</p>\n            <small>Updated: {{comic.last_update | date: 'longDate'}}</small>\n            <ul [ngClass]=\"{'no-overflow': currentWidth > mobileWidth}\">\n              <li *ngFor=\"let issue of orderedIssues\" style=\"margin: .2em\">\n                <div class=\"is-flex\" style=\"align-items: center; justify-content: space-between\">\n\n                  <span>\n                    {{getPercentageIcon(issue.percentage)}}\n                  </span>\n\n                  <a [routerLink]=\"['/comic', comic._id, issue.id]\"> {{issue.title}}</a>\n\n                  <div class=\"is-inline\" (click)=\"markIssueRead.emit({comic: comic._id, issue: issue.id, val: !issue.read})\">\n                    <input type=\"checkbox\" name=\"switchRounded\" class=\"switch is-rounded\" [checked]=\"issue.read\">\n                    <label for=\"switchRounded\"></label>\n                  </div>\n\n                </div>\n              </li>\n            </ul>\n          </article>\n        </div>\n      </div>\n\n\n    </div>\n  </div>\n\n</section>"
 
 /***/ }),
 
@@ -1180,6 +1183,62 @@ var EntityFormComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/slow-image/slow-image.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ":host {\n  height: 100%;\n  display: block;\n}\n\nimg {\n  height: 100%;\n}\n\n.rotating {\n  position: absolute;\n  top: calc(50% - .7em);\n  right: calc(50% - .5em);\n  font-size: 7em;\n  -webkit-animation: rotating 3s linear infinite;\n          animation: rotating 3s linear infinite;\n}\n\n@-webkit-keyframes rotating {\n    from {\n      -webkit-transform: rotate(0deg);\n              transform: rotate(0deg);\n    }\n    to {\n      -webkit-transform: rotate(360deg);\n              transform: rotate(360deg);\n    }\n  }\n\n@keyframes rotating {\n    from {\n      -webkit-transform: rotate(0deg);\n              transform: rotate(0deg);\n    }\n    to {\n      -webkit-transform: rotate(-360deg);\n              transform: rotate(-360deg);\n    }\n  }"
+
+/***/ }),
+
+/***/ "./src/app/components/slow-image/slow-image.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"loading\" class=\"rotating\">🌀</div>\n<img [hidden]=\"loading\" [src]=\"src\" (load)=\"loaded()\" alt=\"cover\">"
+
+/***/ }),
+
+/***/ "./src/app/components/slow-image/slow-image.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SlowImageComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var SlowImageComponent = /** @class */ (function () {
+    function SlowImageComponent() {
+        this.loading = true;
+    }
+    SlowImageComponent.prototype.loaded = function () {
+        this.loading = false;
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+        __metadata("design:type", String)
+    ], SlowImageComponent.prototype, "src", void 0);
+    SlowImageComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'pou-slow-image',
+            template: __webpack_require__("./src/app/components/slow-image/slow-image.component.html"),
+            styles: [__webpack_require__("./src/app/components/slow-image/slow-image.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SlowImageComponent);
+    return SlowImageComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/typeahead/typeahead.component.css":
 /***/ (function(module, exports) {
 
@@ -1251,7 +1310,7 @@ module.exports = ".cover-background-parent {\n  position: absolute;\n  right: 0;
 /***/ "./src/app/home/home-item/home-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [routerLink]=\"['/comic', comic._id]\" style=\"min-height: 15.25rem\" class=\"box has-text-white is-flex flex-container relative\">\n\n  <div class=\"cover-background-parent\">\n    <div class=\"cover-background-child\" [style.backgroundImage]=\"'url('+ comic.cover +')'\"></div>\n  </div>\n\n  <div class=\"to-corner is-flex\">\n    <div class=\"tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-black' : 'is-dark']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</div>\n  \n    <div (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n      <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n      <label for=\"switch\"></label>\n    </div>\n  </div>\n\n\n  <h1 style=\"font-size: 1.1em; z-index: 10\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
+module.exports = "<div [routerLink]=\"['/comic', comic._id]\" style=\"min-height: 15.25rem\" class=\"box has-text-white is-flex flex-container relative\">\n\n  <div class=\"cover-background-parent\">\n    <div class=\"cover-background-child\">\n      <pou-slow-image [src]=\"comic.cover\"></pou-slow-image>\n    </div>\n  </div>\n\n  <div class=\"to-corner is-flex\">\n    <div class=\"tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-black' : 'is-dark']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</div>\n  \n    <div (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n      <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n      <label for=\"switch\"></label>\n    </div>\n  </div>\n\n\n  <h1 style=\"font-size: 1.1em; z-index: 10\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
 
 /***/ }),
 
@@ -1718,7 +1777,7 @@ module.exports = ".to-corner {\n    position: absolute;\n    top: .4em;\n}\n\n.t
 /***/ "./src/app/search/search-item/search-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"tile is-ancestor columns is-mobile\" style=\"border: 1px solid; border-radius: 3px; margin: .3em\">\n  <div class=\"tile is-vertical is-4\">\n    <div class=\"tile is-parent is-paddingless\">\n      <article class=\"tile is-child\">\n        <figure class=\"image\">\n          <img [src]=\"comic.cover\" alt=\"cover\">\n\n          <div class=\"field to-corner to-right\" (click)=\"onToggleWish.emit(comic)\">\n            <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n            <label for=\"switch\"></label>\n          </div>\n\n        </figure>\n      </article>\n    </div>\n  </div>\n\n  <div class=\"tile is-vertical is-parent\" (click)=\"goTo.emit(comic._id)\">\n\n    <div class=\"tile is-child has-text-centered\">\n      <p class=\"has-text-weight-bold is-size-4-tablet\" >{{comic.title}}</p>\n      <p class=\"is-size-7\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</p>\n    </div>\n    \n    <div class=\"tile is-child\">\n      <p class=\"has-text-centered is-size-7-mobile\">📅 {{comic.publication_date}}</p>\n      <p class=\"is-size-7 has-text-justified\">{{limit(comic.summary, 100)}}</p>\n    </div>\n\n  </div>\n\n</div>"
+module.exports = "<div class=\"tile is-ancestor columns is-mobile\" style=\"border: 1px solid; border-radius: 3px; margin: .3em\">\n  <div class=\"tile is-vertical is-4\">\n    <div class=\"tile is-parent is-paddingless\">\n      <article class=\"tile is-child\">\n        <figure class=\"image\" style=\"height:100%\">\n          <pou-slow-image [src]=\"comic.cover\"></pou-slow-image>\n\n          <div class=\"field to-corner to-right\" (click)=\"onToggleWish.emit(comic)\">\n            <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n            <label for=\"switch\"></label>\n          </div>\n\n        </figure>\n      </article>\n    </div>\n  </div>\n\n  <div class=\"tile is-vertical is-parent\" (click)=\"goTo.emit(comic._id)\">\n\n    <div class=\"tile is-child has-text-centered\">\n      <p class=\"has-text-weight-bold is-size-4-tablet\" >{{comic.title}}</p>\n      <p class=\"is-size-7\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</p>\n    </div>\n    \n    <div class=\"tile is-child\">\n      <p class=\"has-text-centered is-size-7-mobile\">📅 {{comic.publication_date}}</p>\n      <p class=\"is-size-7 has-text-justified\">{{limit(comic.summary, 100)}}</p>\n    </div>\n\n  </div>\n\n</div>"
 
 /***/ }),
 
