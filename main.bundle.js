@@ -1193,7 +1193,7 @@ module.exports = ":host {\n  height: 100%;\n  display: block;\n}\n\nimg {\n  hei
 /***/ "./src/app/components/slow-image/slow-image.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"loading\" class=\"rotating\">🌀</div>\n<img [hidden]=\"loading\" [src]=\"src\" (load)=\"loaded()\" alt=\"cover\">"
+module.exports = "<div *ngIf=\"loading\" class=\"rotating\">🌀</div>\n<img *ngIf=\"insideViewport\" [hidden]=\"loading\" [src]=\"src\" (load)=\"loaded()\" alt=\"cover\">"
 
 /***/ }),
 
@@ -1214,11 +1214,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 var SlowImageComponent = /** @class */ (function () {
-    function SlowImageComponent() {
+    function SlowImageComponent(_element) {
+        var _this = this;
+        this._element = _element;
         this.loading = true;
+        this.insideViewport = false;
+        this._checkForIntersection = function (entries) {
+            entries.forEach(function (entry) {
+                if (_this._checkIfIntersecting(entry)) {
+                    _this.insideViewport = true;
+                    _this._intersectionObserver.unobserve((_this._element.nativeElement));
+                    _this._intersectionObserver.disconnect();
+                }
+            });
+        };
     }
+    SlowImageComponent.prototype.ngAfterViewInit = function () {
+        this._intersectionObserver = new IntersectionObserver(this._checkForIntersection, { threshold: 0.7 });
+        this._intersectionObserver.observe((this._element.nativeElement));
+    };
     SlowImageComponent.prototype.loaded = function () {
         this.loading = false;
+    };
+    SlowImageComponent.prototype._checkIfIntersecting = function (entry) {
+        return entry.isIntersecting && entry.target === this._element.nativeElement;
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
@@ -1230,7 +1249,7 @@ var SlowImageComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/slow-image/slow-image.component.html"),
             styles: [__webpack_require__("./src/app/components/slow-image/slow-image.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]])
     ], SlowImageComponent);
     return SlowImageComponent;
 }());
