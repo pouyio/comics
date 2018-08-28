@@ -1170,7 +1170,7 @@ var EntityFormComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/entity-form/entity-form.component.html"),
             providers: [{
                     provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALUE_ACCESSOR */],
-                    useExisting: Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* forwardRef */])(function () { return EntityFormComponent_1; }),
+                    useExisting: Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* forwardRef */])(function () { return EntityFormComponent_1; }),
                     multi: true,
                 }]
         }),
@@ -1855,7 +1855,7 @@ var SearchItemComponent = /** @class */ (function () {
 /***/ "./src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field has-addons is-marginless\">\n  <div class=\"control\">\n    <input [formControl]=\"searchForm\" (keyup.escape)=\"searchForm.reset()\" [class.is-danger]=\"searchForm.value && searchForm.value.length <= 3\"\n      class=\"input is-small\" type=\"text\" placeholder=\"Search\">\n  </div>\n  <div class=\"control\">\n    <a [class.is-loading]=\"isLoading\" class=\"button is-small is-light is-outlined\" (click)=\"searchForm.reset()\">\n      <span class=\"is-hidden-mobile\"> Cancel &nbsp;</span> ❌\n    </a>\n  </div>\n</div>\n\n<ul *ngIf=\"listed | async; let comics\" class=\"container custom-container\">\n  <li *ngFor=\"let comic of comics\">\n    <pou-search-item [comic]=\"comic\" (goTo)=\"onGoTo($event)\" (onToggleWish)=\"toggleWish($event)\"></pou-search-item>\n  </li>\n</ul>"
+module.exports = "<div class=\"field has-addons is-marginless\">\n  <div class=\"control\">\n    <input [formControl]=\"searchForm\" (keyup.escape)=\"searchForm.reset()\" [class.is-danger]=\"searchForm.value && searchForm.value.length <= 3\"\n      class=\"input is-small\" type=\"text\" placeholder=\"Search\">\n  </div>\n  <div class=\"control\">\n    <a [class.is-loading]=\"isLoading\" class=\"button is-small is-light is-outlined\" (click)=\"searchForm.reset()\">\n      <span class=\"is-hidden-mobile\"> Cancel &nbsp;</span> ❌\n    </a>\n  </div>\n</div>\n\n<ng-container *ngIf=\"listed | async; let comics\">\n  <ul #resultsList class=\"container custom-container\">\n    <li *ngFor=\"let comic of comics\">\n      <pou-search-item [comic]=\"comic\" (goTo)=\"onGoTo($event)\" (onToggleWish)=\"toggleWish($event)\"></pou-search-item>\n    </li>\n  </ul>\n</ng-container>"
 
 /***/ }),
 
@@ -1933,7 +1933,7 @@ var SearchComponent = /** @class */ (function () {
             _this.router.navigate(['/comic', comicId]);
         };
         this.listed = this.searchForm.valueChanges
-            .debounceTime(500)
+            .debounceTime(200)
             .distinctUntilChanged()
             .do(function () { return _this.isLoading = true; })
             .switchMap(function (search) { return _this.search$(search); })
@@ -1950,6 +1950,25 @@ var SearchComponent = /** @class */ (function () {
         //   .map(({ data }) => data.comics)
         //   .do(() => this.isLoading = false);
     }
+    SearchComponent.prototype.onClick = function (event, targetElement) {
+        if (!targetElement || !this.resultsList) {
+            return;
+        }
+        var clickedInside = this.resultsList.nativeElement.contains(targetElement);
+        if (!clickedInside) {
+            this.searchForm.reset();
+        }
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('resultsList'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+    ], SearchComponent.prototype, "resultsList", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["y" /* HostListener */])('document:click', ['$event', '$event.target']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [MouseEvent, HTMLElement]),
+        __metadata("design:returntype", void 0)
+    ], SearchComponent.prototype, "onClick", null);
     SearchComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'pou-search',
@@ -1995,7 +2014,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 
