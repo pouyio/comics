@@ -1329,7 +1329,7 @@ module.exports = ".cover-background-parent {\n  position: absolute;\n  right: 0;
 /***/ "./src/app/home/home-item/home-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [routerLink]=\"['/comic', comic._id]\" style=\"min-height: 15.25rem\" class=\"box has-text-white is-flex flex-container relative\">\n\n  <div class=\"cover-background-parent\">\n    <div class=\"cover-background-child\">\n      <pou-slow-image [src]=\"comic.cover\"></pou-slow-image>\n    </div>\n  </div>\n\n  <div class=\"to-corner is-flex\">\n    <div class=\"tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-black' : 'is-dark']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</div>\n  \n    <div (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n      <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n      <label for=\"switch\"></label>\n    </div>\n  </div>\n\n\n  <h1 style=\"font-size: 1.1em; z-index: 10\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
+module.exports = "<div [routerLink]=\"['/comic', comic._id]\" style=\"min-height: 15.25rem\" class=\"box is-clipped has-text-white is-flex flex-container relative\">\n\n  <div class=\"cover-background-parent\">\n    <div class=\"cover-background-child\">\n      <pou-slow-image [src]=\"comic.cover\"></pou-slow-image>\n    </div>\n  </div>\n\n  <div class=\"to-corner is-flex\">\n    <div class=\"tag is-rounded\" [ngClass]=\"[comic.status === 'Completed' ? 'is-black' : 'is-dark']\">{{comic.status === 'Completed' ? '🏛' : '🏗'}} {{comic.status}}</div>\n  \n    <div (click)=\"toggleButton.emit(comic); $event.stopPropagation()\">\n      <input id=\"switch\" type=\"checkbox\" name=\"switch\" class=\"switch is-rounded\" [checked]=\"comic.wish\">\n      <label for=\"switch\"></label>\n    </div>\n  </div>\n\n\n  <h1 style=\"font-size: 1.1em; z-index: 10\" class=\"has-text-weight-bold\">{{comic.title}}</h1>\n\n</div>"
 
 /***/ }),
 
@@ -1993,8 +1993,8 @@ var templateObject_1, templateObject_2;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
 var environment = {
     production: true,
-    api_url: 'https://aws.vicenteortiz.me:8084/graphql',
-    rest_url: 'https://aws.vicenteortiz.me:8084'
+    api_url: 'https://hardcore-brown-51dad3.netlify.com/.netlify/functions/index/graphql',
+    rest_url: 'https://hardcore-brown-51dad3.netlify.com/.netlify/functions/index'
 };
 
 
